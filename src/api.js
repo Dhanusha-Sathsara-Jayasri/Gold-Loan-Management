@@ -1,84 +1,58 @@
-//Server starts here
 const express = require('express');
-const app = express();
-app.listen(3000, () => console.log('Server started on port 3000'));
+const mongoose = require('mongoose');
+const serverless = require('serverless-http');
 
-//Connected to netlify
-const serverless = require("serverless-http");
+// Replace with your actual environment variables
+const MONGO_URI = process.env.MONGO_URI;
+
+const app = express();
 const router = express.Router();
 
-
-// Database connection starts here
-const mongoose = require('mongoose');
 app.use(express.json());
-mongoose
-.connect('mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0')
-.then(()=>{
-    console.log("Database Connected Successfully");
-}).catch(()=>{
-    console.log("error");
+
+// Connect to MongoDB with improved error handling
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
+  .then(() => console.log('Database Connected Successfully'))
+  .catch(err => {
+    console.error('Error connecting to database:', err);
+    // Handle the error gracefully, e.g., retry or log it
+  });
 
+// Collections get here
+const customers = require('../models/CustomerDetails'); // Assuming this file exists
 
-
-//Collections get here
-// const customers = require('../models/CustomerDetails');
-
-
-
-
-
-//Requests sends here 
-
-router.get('/', (req,res) => {
-
-    res.send(
-
-        "Hello World!"
-    );
-
-})
-
-router.get('/test',async (req,res) =>  {
-
-  const test = {
-
-    name : "kk",
-
+// Optimize database queries and error handling
+router.get('/test', async (req, res) => {
+  try {
+    // Assuming you need to fetch data from the database
+    const data = await customers.find({}); // Replace with your actual query
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
+});
 
-  res.send(test);
+router.post('/register', async (req, res) => {
+  const { name, whatsApp, NIC } = req.body;
 
-})
-
-router.post('/register',async (req, res) => {
-
-    const { name, whatsApp, NIC } = req.body
-
-    const oldCustomer = await customers.findOne({ NIC:NIC});
-
-    if(oldCustomer){
-        return res.send({status: 'fail',data:"Customer Already Registered"});
+  try {
+    const oldCustomer = await customers.findOne({ NIC });
+    if (oldCustomer) {
+      return res.status(400).json({ message: 'Customer Already Registered' });
     }
 
-    try {
-        
-        await customers.create({
-            name:name,
-            whatsApp:whatsApp,
-            NIC:NIC
-        });
+    const newCustomer = new customers({ name, whatsApp, NIC });
+    await newCustomer.save();
+    res.status(201).json({ message: 'Customer Registered Successfully' });
+  } catch (error) {
+    console.error('Error registering customer:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
-        res.send({status: 'success', data:"Customer Registered Successfully"});
-
-
-    } catch (error) {
-      res.send({status: "Error While Registering Customer", data: error});
-    }
-
-})
-
-
-
-app.use('/.netlify/functions/api',router);
+app.use('/.netlify/functions/api', router);
 module.exports.handler = serverless(app);
