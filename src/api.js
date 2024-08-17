@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const serverless = require('serverless-http');
 
 // Replace with your actual environment variables
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0';
 
 const app = express();
 const router = express.Router();
