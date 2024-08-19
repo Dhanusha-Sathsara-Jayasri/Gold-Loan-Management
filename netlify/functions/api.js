@@ -28,6 +28,16 @@ router.get('/test', async (req, res) => {
   res.send(test);
 });
 
+router.get('/test2', async (req, res) => {
+  const test = {
+    name: "kk test2 done !",
+  };
+
+  res.send(test);
+});
+
+
+
 router.post('/register', async (req, res) => {
     const { name, whatsApp, NIC } = req.body
 
