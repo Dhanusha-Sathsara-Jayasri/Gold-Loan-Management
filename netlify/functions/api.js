@@ -17,7 +17,8 @@ mongoose
   });
 
 
-  const customers = require('./models/CustomerDetails.js');
+const customers = require('./models/CustomerDetails.js');
+const { Alert } = require('react-native');
 
 // Requests send here
 router.get('/test', async (req, res) => {
@@ -39,26 +40,27 @@ router.get('/test2', async (req, res) => {
 
 
 router.post('/register', async (req, res) => {
-    const { name, whatsApp, NIC } = req.body
+  const { name, whatsApp, NIC } = req.body
 
-    const oldCustomer = await customers.findOne({ NIC:NIC});
+  const oldCustomer = await customers.findOne({ NIC: NIC });
 
-    if (oldCustomer) {
-        return res.send({ status: 'fail', data: "Customer Already Registered" });
-    }
+  if (oldCustomer) {
+    Alert.alert("Customer Already Registered");
+    // return res.send({ status: 'fail', data: "Customer Already Registered" });
+  }
 
-    try {
-        await customers.create({
-            name: name,
-            whatsApp: whatsApp,
-            NIC: NIC
-        });
+  try {
+    await customers.create({
+      name: name,
+      whatsApp: whatsApp,
+      NIC: NIC
+    });
 
-        res.send({ status: 'success', data: "Customer Registered Successfully" });
+    res.send({ status: 'success', data: "Customer Registered Successfully" });
 
-    } catch (error) {
-        res.send({ status: "Error While Registering Customer", data: error });
-    }
+  } catch (error) {
+    res.send({ status: "Error While Registering Customer", data: error });
+  }
 })
 
 app.use('/api/', router);
