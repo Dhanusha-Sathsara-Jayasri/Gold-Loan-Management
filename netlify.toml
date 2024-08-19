@@ -4,3 +4,4 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+   command = "nodemon start" 
