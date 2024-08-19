@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install && npm run build",
-    "start": "netlify dev",
-    "deploy": "netlify deploy --prod"
+    "build": "netlify deploy --prod"
   },
   "author": "",
   "license": "ISC",
