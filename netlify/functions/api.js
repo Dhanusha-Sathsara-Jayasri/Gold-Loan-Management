@@ -45,8 +45,7 @@ router.post('/register', async (req, res) => {
   const oldCustomer = await customers.findOne({ NIC: NIC });
 
   if (oldCustomer) {
-    Alert.alert("Customer Already Registered");
-    // return res.send({ status: 'fail', data: "Customer Already Registered" });
+    return res.send({ status: 'fail', data: "Customer Already Registered" });
   }
 
   try {
