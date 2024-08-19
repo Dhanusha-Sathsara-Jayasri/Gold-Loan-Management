@@ -18,7 +18,6 @@ mongoose
 
 
 const customers = require('./models/CustomerDetails.js');
-const { Alert } = require('react-native');
 
 // Requests send here
 router.get('/test', async (req, res) => {
