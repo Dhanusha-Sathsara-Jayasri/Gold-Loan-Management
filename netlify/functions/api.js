@@ -16,8 +16,8 @@ mongoose
     console.log("Database Connected Successfully");
   });
 
-  
-  const customers = require('./models/CustomerDetails');
+
+  const customers = require('./models/CustomerDetails.js');
 
 // Requests send here
 router.get('/test', async (req, res) => {
