@@ -25,12 +25,12 @@ const marketValueSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: Date,
+        type: String,
         required: true
     }
 });
 
 // Create the model for the schema
-const MarketValue = mongoose.model('MarketValue', marketValueSchema);
+const MarketValue = mongoose.model('Market-Values', marketValueSchema);
 
 module.exports = MarketValue
