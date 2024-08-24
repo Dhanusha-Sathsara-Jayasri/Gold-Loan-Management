@@ -28,9 +28,9 @@ router.get('/test', async (req, res) => {
   res.send(test);
 });
 
-router.get('/test2', async (req, res) => {
+router.get('/test3', async (req, res) => {
   const test = {
-    name: "kk test2 done !",
+    name: "kk test3 done !",
   };
 
   res.send(test);
