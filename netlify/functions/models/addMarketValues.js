@@ -19,16 +19,22 @@ const caratSchema = new mongoose.Schema({
     }
 });
 
-const marketValueSchema = new mongoose.Schema({
-    carats: {
-        type: [caratSchema], // Array of carat objects
-        required: true
+const marketValueSchema = new mongoose.Schema(
+    {
+        carats: {
+            type: [caratSchema], // Array of carat objects
+            required: true
+        },
+        date: {
+            type: String,
+            required: true
+        },
+
     },
-    date: {
-        type: String,
-        required: true
+    {
+        versionKey: false, 
     }
-});
+);
 
 // Create the model for the schema
 const MarketValue = mongoose.model('Market-Values', marketValueSchema);
