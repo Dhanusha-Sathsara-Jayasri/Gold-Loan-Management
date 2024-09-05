@@ -3,17 +3,29 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const serverless = require('serverless-http');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const router = express.Router();
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Middleware for parsing JSON requests
 app.use(bodyParser.json());
 
+
 // Database connection starts here
-router.use(express.json());
 mongoose
-  .connect('mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0')
+  .connect('mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Database Connected Successfully");
+  })
+  .catch((error) => {
+    console.error("Database Connection Failed", error);
   });
 
 
@@ -21,7 +33,7 @@ mongoose
 const customers = require('./models/CustomerDetails.js');
 const MarketValue = require('./models/addMarketValues.js');
 
-// Requests send here
+// Routers 
 router.post('/addMarketValues', async (req, res) => {
   try {
     const { carats, date } = req.body;
