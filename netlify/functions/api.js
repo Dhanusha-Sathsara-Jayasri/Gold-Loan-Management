@@ -22,15 +22,6 @@ const customers = require('./models/CustomerDetails.js');
 const MarketValue = require('./models/addMarketValues.js');
 
 // Requests send here
-router.post('/test3', async (req, res) => {
-  const test = {
-    name: "kk test3 done !",
-  };
-
-  res.send(test);
-});
-
-
 router.post('/addMarketValues', async (req, res) => {
   try {
     const { carats, date } = req.body;
@@ -80,17 +71,25 @@ router.post('/register', async (req, res) => {
 
 });
 
-router.post('/test3', async (req, res) => {
+router.get('/test', async (req, res) => {
   const test = {
-    name: "kk test3 done !",
+    name: "kk done !",
   };
 
   res.send(test);
 });
 
-router.get('/test', async (req, res) => {
+router.get('/test3', async (req, res) => {
   const test = {
-    name: "kk done !",
+    name: "kk test3 get done !",
+  };
+
+  res.send(test);
+});
+
+router.post('/test3', async (req, res) => {
+  const test = {
+    name: "kk test3 post done !",
   };
 
   res.send(test);
