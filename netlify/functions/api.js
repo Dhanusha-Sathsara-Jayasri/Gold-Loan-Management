@@ -78,13 +78,14 @@ router.post('/register', async (req, res) => {
     res.send({ status: "Error While Registering Customer", data: error });
   }
 
-  router.post('/test3', async (req, res) => {
-    const test = {
-      name: "kk test3 done !",
-    };
-  
-    res.send(test);
-  });
+});
+
+router.post('/test3', async (req, res) => {
+  const test = {
+    name: "kk test3 done !",
+  };
+
+  res.send(test);
 });
 
 router.get('/test', async (req, res) => {
