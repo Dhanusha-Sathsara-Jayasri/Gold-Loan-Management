@@ -6,14 +6,14 @@ const customerDetailsSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Enter User Name"],
     },
-    whatsApp: {
-      type: String,
-      required: [true, "Please Enter User WhatsApp Number"],
-    },
     NIC: {
       type: String,
       unique: true,
       required: [true, "Please Enter NIC"],
+    }, 
+    whatsApp: {
+      type: String,
+      required: [true, "Please Enter User WhatsApp Number"],
     }
   },
   {
