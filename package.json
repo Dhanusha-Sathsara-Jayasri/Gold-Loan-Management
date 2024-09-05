@@ -1,21 +1,23 @@
 {
   "name": "gold-loan-manage-back-end",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend server for gold loan management system",
   "main": "index.js",
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "dev": "nodemon server"
   },
-  "author": "",
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "@netlify/functions": "^2.8.1",
     "@types/express": "^4.17.21",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.3",
     "nodemon": "^3.1.4",
-    "serverless-http": "^3.2.0",
-    "react-native": "^0.71.0"
+    "react-native": "^0.71.0",
+    "serverless-http": "^3.2.0"
   }
 }
