@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 // Database connection starts here
 router.use(express.json());
 mongoose
-  .connect('mongodb+srv://intelmdb3gold:P6lJGy1cv64bl7Tf@gold-loans.bs6xu.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Gold-Loans')
+  .connect('mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => {
     console.log("Database Connected Successfully");
   });
