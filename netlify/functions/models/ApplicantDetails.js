@@ -33,6 +33,9 @@ const applicantDetailsSchema = new mongoose.Schema({
     enum: ['Married', 'Unmarried'],
     required: true
   }
+},
+{
+  versionKey: false, 
 });
 
 const ApplicantDetails = mongoose.model('Applicant-Details', applicantDetailsSchema);
