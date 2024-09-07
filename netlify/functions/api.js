@@ -83,6 +83,28 @@ router.post('/register', async (req, res) => {
 
 });
 
+router.post('/ApplicantDetails', async (req, res) => {
+ 
+  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender } = req.body
+  
+  try {
+    await customers.create({
+      phoneNumber: phoneNumber,
+      addressLine1: addressLine1,
+      addressLine2: addressLine2,
+      divisionalSecretariatDivision: divisionalSecretariatDivision,
+      district: district,
+      gender: gender
+    });
+    
+    res.send({ status: 'success', data: "Customer ApplicantDetails Successfully" });
+    
+  } catch (error) {
+    res.send({ status: "Error While Registering Customer", data: error });
+  }
+
+});
+
 router.get('/test', async (req, res) => {
   const test = {
     name: "kk done !",
