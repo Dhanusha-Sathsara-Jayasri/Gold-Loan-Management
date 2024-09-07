@@ -32,6 +32,7 @@ mongoose
 //Models gets here
 const customers = require('./models/CustomerDetails.js');
 const MarketValue = require('./models/addMarketValues.js');
+const ApplicantDetails = require('./models/ApplicantDetails.js');
 
 // Routers 
 router.post('/addMarketValues', async (req, res) => {
@@ -85,16 +86,17 @@ router.post('/register', async (req, res) => {
 
 router.post('/ApplicantDetails', async (req, res) => {
  
-  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender } = req.body
+  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender,maritalStatus } = req.body
   
   try {
-    await customers.create({
+    await ApplicantDetails.create({
       phoneNumber: phoneNumber,
       addressLine1: addressLine1,
       addressLine2: addressLine2,
       divisionalSecretariatDivision: divisionalSecretariatDivision,
       district: district,
-      gender: gender
+      gender: gender,
+      maritalStatus:maritalStatus
     });
     
     res.send({ status: 'success', data: "Customer ApplicantDetails Successfully" });
