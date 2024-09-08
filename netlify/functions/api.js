@@ -70,13 +70,14 @@ router.post('/register', async (req, res) => {
   }
   
   try {
-    await customers.create({
+
+    const newCustomer = await customers.create({
       name: name,
       whatsApp: whatsApp,
       NIC: NIC
     });
     
-    res.send({ status: 'success', data: "Customer Registered Successfully" });
+    res.send({ status: 'success', data: "Customer Registered Successfully", insertedId: newCustomer._id });
     
   } catch (error) {
     res.send({ status: "Error While Registering Customer", data: error });
@@ -86,10 +87,11 @@ router.post('/register', async (req, res) => {
 
 router.post('/ApplicantDetails', async (req, res) => {
  
-  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender,maritalStatus } = req.body
+  const { customerId, phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender,maritalStatus } = req.body
   
   try {
     await ApplicantDetails.create({
+      customerId: customerId,
       phoneNumber: phoneNumber,
       addressLine1: addressLine1,
       addressLine2: addressLine2,
@@ -99,10 +101,10 @@ router.post('/ApplicantDetails', async (req, res) => {
       maritalStatus:maritalStatus
     });
     
-    res.send({ status: 'success', data: "Customer ApplicantDetails Successfully" });
+    res.send({ status: 'success', data: "Customer ApplicantDetails Insert Successfully" });
     
   } catch (error) {
-    res.send({ status: "Error While Registering Customer", data: error });
+    res.send({ status: "Error While Customer ApplicantDetails Insert", data: error });
   }
 
 });
