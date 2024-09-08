@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const applicantDetailsSchema = new mongoose.Schema({
+
+  customerId:{
+    type: String,
+    required: true
+  },
   phoneNumber: {
     type: String,
     required: true,
@@ -12,7 +17,7 @@ const applicantDetailsSchema = new mongoose.Schema({
     required: true
   },
   addressLine2: {
-    type: String, // Optional field
+    type: String, 
     default: ''
   },
   divisionalSecretariatDivision: {
