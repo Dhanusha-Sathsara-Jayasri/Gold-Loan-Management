@@ -22,7 +22,7 @@ const caratSchema = new mongoose.Schema({
 const marketValueSchema = new mongoose.Schema(
     {
         carats: {
-            type: [caratSchema], // Array of carat objects
+            type: [caratSchema], 
             required: true
         },
         date: {
@@ -36,7 +36,6 @@ const marketValueSchema = new mongoose.Schema(
     }
 );
 
-// Create the model for the schema
 const MarketValue = mongoose.model('Market-Values', marketValueSchema);
 
 module.exports = MarketValue

@@ -9,13 +9,10 @@ const router = express.Router();
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors({
-  origin: 'http://localhost:3000/',
-}));
+app.use(cors());
 
 // Middleware for parsing JSON requests
-app.use(bodyParser.json());
-
+app.use(express.json());
 
 // Database connection starts here
 mongoose
@@ -32,26 +29,25 @@ mongoose
 
 //Image Save Part
 const multer = require('multer');
-const path = require('path');
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'applicationsImg'); // Ensure this directory exists
+  destination: function (req, file, cb) {
+     return cb(null, './public/application');
   },
-  filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname);
-      const filename = `${Date.now()}${ext}`;
-      cb(null, filename);
+  filename: function (req, file, cb) {
+      return cb(null,`${Date.now()}_${file.originalname}`);
   }
-});
-
+}); 
+ 
 const upload = multer({ storage });
 
 router.post('/upload', upload.single('file'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
-    }
-    res.json({ filename: req.file.filename });
+  console.log(req.body);
+  console.log(req.file);
+    // if (!req.file) {
+    //     return res.status(400).json({ message: 'No file uploaded' });
+    // }
+    // res.json({ filename: req.file.filename });
 });
 //Image Save Part
 
