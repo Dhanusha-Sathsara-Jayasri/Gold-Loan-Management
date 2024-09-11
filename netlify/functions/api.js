@@ -75,23 +75,24 @@ const upload = multer({
 
 // Define the POST route for image uploads
 router.post('/upload', (req, res) => {
-    upload.single('file')(req, res, (err) => {
-        if (err instanceof multer.MulterError) {
-            // Handle Multer errors (e.g., file too large)
-            return res.status(400).json({ error: err.message });
-        } else if (err) {
-            // Handle other errors (e.g., invalid file type)
-            return res.status(400).json({ error: err.message });
-        }
+  console.log("done");
+    // upload.single('file')(req, res, (err) => {
+    //     if (err instanceof multer.MulterError) {
+    //         // Handle Multer errors (e.g., file too large)
+    //         return res.status(400).json({ error: err.message });
+    //     } else if (err) {
+    //         // Handle other errors (e.g., invalid file type)
+    //         return res.status(400).json({ error: err.message });
+    //     }
 
-        // If the file is successfully uploaded
-        if (req.file) {
-            res.json({ filename: req.file.filename });
-        } else {
-            // If no file was uploaded
-            res.status(400).json({ error: 'No file uploaded.' });
-        }
-    });
+    //     // If the file is successfully uploaded
+    //     if (req.file) {
+    //         res.json({ filename: req.file.filename });
+    //     } else {
+    //         // If no file was uploaded
+    //         res.status(400).json({ error: 'No file uploaded.' });
+    //     }
+    // });
 });
 //Image Upload Part
 
