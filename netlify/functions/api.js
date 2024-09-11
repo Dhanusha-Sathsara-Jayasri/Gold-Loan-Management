@@ -30,69 +30,13 @@ mongoose
 
 
 //Image Upload Part
-// Import necessary modules
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
-// Ensure that the 'applicationsImg' directory exists
-const uploadDir = 'applicationsImg';
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Define file storage options
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir); // Set upload directory to 'applicationsImg'
-    },
-    filename: (req, file, cb) => {
-        // Generate a unique filename using the current timestamp and file extension
-        const ext = path.extname(file.originalname);
-        const filename = `${Date.now()}${ext}`;
-        cb(null, filename);
-    }
-});
-
-// Define a file filter to allow only specific file types (e.g., JPEG, PNG)
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (allowedTypes.includes(file.mimetype)) {
-        cb(null, true); // Accept the file
-    } else {
-        cb(new Error('Invalid file type. Only JPEG and PNG are allowed.'), false); // Reject the file
-    }
-};
-
-// Set file size limit (e.g., 5MB)
-const upload = multer({
-    storage,
-    limits: {
-        fileSize: 5 * 1024 * 1024 // 5MB file size limit
-    },
-    fileFilter
-});
-
-// Define the POST route for image uploads
 router.post('/upload', (req, res) => {
-  console.log("done");
-    // upload.single('file')(req, res, (err) => {
-    //     if (err instanceof multer.MulterError) {
-    //         // Handle Multer errors (e.g., file too large)
-    //         return res.status(400).json({ error: err.message });
-    //     } else if (err) {
-    //         // Handle other errors (e.g., invalid file type)
-    //         return res.status(400).json({ error: err.message });
-    //     }
+  const test = {
+    name: "kk done !",
+  };
 
-    //     // If the file is successfully uploaded
-    //     if (req.file) {
-    //         res.json({ filename: req.file.filename });
-    //     } else {
-    //         // If no file was uploaded
-    //         res.status(400).json({ error: 'No file uploaded.' });
-    //     }
-    // });
+  res.send(test);
 });
 //Image Upload Part
 
