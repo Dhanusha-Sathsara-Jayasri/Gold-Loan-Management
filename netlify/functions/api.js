@@ -5,6 +5,9 @@ const serverless = require('serverless-http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const multer = require('multer');
+const path = require('path');
+
 const router = express.Router();
 const app = express();
 
@@ -29,12 +32,28 @@ mongoose
   });
 
 
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'applicationsImg'); 
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const filename = `${Date.now()}${ext}`;
+        cb(null, filename);
+    }
+});
+const upload = multer({ storage });
+
 //Models gets here
 const customers = require('./models/CustomerDetails.js');
 const MarketValue = require('./models/addMarketValues.js');
 const ApplicantDetails = require('./models/ApplicantDetails.js');
 
 // Routers 
+router.post('/upload', upload.single('file'), (req, res) => {
+  res.json({ filename: req.file.filename });
+});
+
 router.post('/addMarketValues', async (req, res) => {
   try {
     const { carats, date } = req.body;
@@ -110,25 +129,6 @@ router.post('/ApplicantDetails', async (req, res) => {
   } catch (error) {
     res.status(500).send({ status: "error", message: "Error while inserting Customer ApplicantDetails", error: error.message });
   }
-});
-
-const upload = multer({ dest: 'temp/' }); 
-router.post('/upload-image', upload.single('image'), async (req, res) => {
-    const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, 'applicationsImg', `${Date.now()}.jpg`);
-
-    try {
-        await sharp(tempPath)
-            .jpeg()
-            .toFile(targetPath);
-
-        fs.unlinkSync(tempPath);
-
-        res.status(200).send('Image uploaded and converted to .jpg');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Failed to process image');
-    }
 });
 
 router.get('/test', async (req, res) => {
