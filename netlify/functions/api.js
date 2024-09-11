@@ -28,17 +28,56 @@ mongoose
     console.error("Database Connection Failed", error);
   });
 
+//Image Save Part
+// Import necessary modules
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
-//Image Upload Part
+// Ensure that the 'applicationsImg' directory exists
+const uploadDir = 'applicationsImg';
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
-router.post('/upload', (req, res) => {
-  const test = {
-    name: "kk done !",
-  };
-
-  res.send(test);
+// Define file storage options
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir); // Set upload directory to 'applicationsImg'
+    },
+    filename: (req, file, cb) => {
+        // Generate a unique filename using the current timestamp and file extension
+        const ext = path.extname(file.originalname);
+        const filename = `${Date.now()}${ext}`;
+        cb(null, filename);
+    }
 });
-//Image Upload Part
+
+// Initialize the multer upload middleware
+const upload = multer({ storage });
+
+// Image Save Part
+router.post('/upload', upload.single('file'), (req, res) => {
+    // Log the uploaded file details
+    if (!req.file) {
+        return res.status(400).send({ error: 'No file uploaded' });
+    }
+
+    console.log('Uploaded file details:', req.file); // Print the file details to the console
+
+    // Send back the file information or any other custom response
+    const fileInfo = {
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+        path: req.file.path,
+    };
+
+    // Respond with the file info
+    res.json(fileInfo);
+});
+//Image Save Part
 
 
 //Models gets here
