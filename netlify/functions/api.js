@@ -86,27 +86,26 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/ApplicantDetails', async (req, res) => {
- 
-  const { customerId, phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender,maritalStatus } = req.body
+  const { customerId, phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender, maritalStatus } = req.body;
   
   try {
     await ApplicantDetails.create({
-      customerId: customerId,
-      phoneNumber: phoneNumber,
-      addressLine1: addressLine1,
-      addressLine2: addressLine2,
-      divisionalSecretariatDivision: divisionalSecretariatDivision,
-      district: district,
-      gender: gender,
-      maritalStatus:maritalStatus
+      customerId: customerId, 
+      applicantDetails: [{    
+        phoneNumber: phoneNumber,
+        addressLine1: addressLine1,
+        addressLine2: addressLine2,
+        divisionalSecretariatDivision: divisionalSecretariatDivision,
+        district: district,
+        gender: gender,
+        maritalStatus: maritalStatus
+      }]
     });
     
-    res.send({ status: 'success', data: "Customer ApplicantDetails Insert Successfully" });
-    
+    res.status(200).send({ status: 'success', data: "Customer ApplicantDetails Inserted Successfully" });
   } catch (error) {
-    res.send({ status: "Error While Customer ApplicantDetails Insert", data: error });
+    res.status(500).send({ status: "error", message: "Error while inserting Customer ApplicantDetails", error: error.message });
   }
-
 });
 
 router.get('/test', async (req, res) => {
