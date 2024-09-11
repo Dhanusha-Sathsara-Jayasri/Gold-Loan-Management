@@ -9,7 +9,9 @@ const router = express.Router();
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000/',
+}));
 
 // Middleware for parsing JSON requests
 app.use(bodyParser.json());
@@ -29,53 +31,27 @@ mongoose
   });
 
 //Image Save Part
-// Import necessary modules
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 
-// Ensure that the 'applicationsImg' directory exists
-const uploadDir = 'applicationsImg';
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Define file storage options
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir); // Set upload directory to 'applicationsImg'
-    },
-    filename: (req, file, cb) => {
-        // Generate a unique filename using the current timestamp and file extension
-        const ext = path.extname(file.originalname);
-        const filename = `${Date.now()}${ext}`;
-        cb(null, filename);
-    }
+  destination: (req, file, cb) => {
+      cb(null, 'applicationsImg'); // Ensure this directory exists
+  },
+  filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      const filename = `${Date.now()}${ext}`;
+      cb(null, filename);
+  }
 });
 
-// Initialize the multer upload middleware
 const upload = multer({ storage });
 
-// Image Save Part
-router.post('/upload', upload.single('file'), (req, res) => {
-    // Log the uploaded file details
+app.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) {
-        return res.status(400).send({ error: 'No file uploaded' });
+        return res.status(400).json({ message: 'No file uploaded' });
     }
-
-    console.log('Uploaded file details:', req.file); // Print the file details to the console
-
-    // Send back the file information or any other custom response
-    const fileInfo = {
-        filename: req.file.filename,
-        originalName: req.file.originalname,
-        mimeType: req.file.mimetype,
-        size: req.file.size,
-        path: req.file.path,
-    };
-
-    // Respond with the file info
-    res.json(fileInfo);
+    res.json({ filename: req.file.filename });
 });
 //Image Save Part
 
