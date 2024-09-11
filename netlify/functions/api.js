@@ -112,6 +112,25 @@ router.post('/ApplicantDetails', async (req, res) => {
   }
 });
 
+const upload = multer({ dest: 'temp/' }); 
+router.post('/upload-image', upload.single('image'), async (req, res) => {
+    const tempPath = req.file.path;
+    const targetPath = path.join(__dirname, 'applicationsImg', `${Date.now()}.jpg`);
+
+    try {
+        await sharp(tempPath)
+            .jpeg()
+            .toFile(targetPath);
+
+        fs.unlinkSync(tempPath);
+
+        res.status(200).send('Image uploaded and converted to .jpg');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Failed to process image');
+    }
+});
+
 router.get('/test', async (req, res) => {
   const test = {
     name: "kk done !",
