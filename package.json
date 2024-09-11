@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+      "aws-sdk": "^2.1030.0",
     "@netlify/functions": "^2.8.1",
     "@types/express": "^4.17.21",
     "cors": "^2.8.5",
