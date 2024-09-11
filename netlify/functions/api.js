@@ -86,10 +86,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/ApplicantDetails', async (req, res) => {
-  const { customerId, applicantDetails } = req.body;  // Get customerId and applicantDetails from the body
-  
-  // Destructure the first element of applicantDetails (assuming there's only one applicantDetail object)
-  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender, maritalStatus } = applicantDetails[0];
+  const { customerId, phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender, maritalStatus } = req.body;
   
   try {
     await ApplicantDetails.create({
