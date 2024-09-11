@@ -86,7 +86,11 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/ApplicantDetails', async (req, res) => {
-  const { customerId, phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender, maritalStatus } = req.body;
+  
+  const { customerId, applicantDetails } = req.body;  
+  
+  const { phoneNumber, addressLine1, addressLine2, divisionalSecretariatDivision, district, gender, maritalStatus } = applicantDetails[0];
+  
   
   try {
     await ApplicantDetails.create({
