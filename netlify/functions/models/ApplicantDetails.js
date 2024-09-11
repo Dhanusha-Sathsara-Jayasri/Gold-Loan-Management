@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 
 const applicantDetailsSchema = new mongoose.Schema({
 
-  customerId:{
-    type: String,
-    required: true
-  },
   phoneNumber: {
     type: String,
     required: true,
@@ -43,6 +39,22 @@ const applicantDetailsSchema = new mongoose.Schema({
   versionKey: false, 
 });
 
-const ApplicantDetails = mongoose.model('Applicant-Details', applicantDetailsSchema);
+const customerApplicantSchema = new mongoose.Schema({
+ 
+  customerId:{
+    type: String,
+    required: true
+  },
+  applicantDetails: {
+    type: [applicantDetailsSchema],
+    required: true
+  }
 
-module.exports = ApplicantDetails;
+},
+{
+  versionKey: false, 
+});
+
+const customerApplicantDetails = mongoose.model('Customer-Applicant-Details', customerApplicantSchema);
+
+module.exports = customerApplicantDetails;
