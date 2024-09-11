@@ -5,6 +5,24 @@ const serverless = require('serverless-http');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
+
+
+
+// Configure AWS
+const AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
+const s3 = new AWS.S3();
+
+
+
+
+
 const router = express.Router();
 const app = express();
 
@@ -29,6 +47,7 @@ mongoose
 
 //Image Save Part
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,16 +58,41 @@ const storage = multer.diskStorage({
   }
 }); 
  
-const upload = multer({ storage });
+// Configure multer for S3
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET_NAME,
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+});
+
+// router.post('/upload', upload.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: 'No file uploaded' });
+//   }
+
+//   console.log(req.body);
+//   console.log(req.file);
+
+//   // Send success response
+//   res.json({ filename: req.file.filename, message: 'File uploaded successfully' });
+// });
 
 router.post('/upload', upload.single('file'), (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
-    // if (!req.file) {
-    //     return res.status(400).json({ message: 'No file uploaded' });
-    // }
-    // res.json({ filename: req.file.filename });
+  if (req.file) {
+    res.json({ message: 'File uploaded successfully', fileUrl: req.file.location });
+  } else {
+    res.status(400).json({ message: 'File upload failed' });
+  }
 });
+
 //Image Save Part
 
 
