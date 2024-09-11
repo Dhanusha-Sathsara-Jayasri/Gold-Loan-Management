@@ -90,8 +90,8 @@ router.post('/ApplicantDetails', async (req, res) => {
   
   try {
     await ApplicantDetails.create({
-      customerId: customerId, 
-      applicantDetails: [{    
+      customerId: customerId,  
+      applicantDetails: [{     
         phoneNumber: phoneNumber,
         addressLine1: addressLine1,
         addressLine2: addressLine2,
