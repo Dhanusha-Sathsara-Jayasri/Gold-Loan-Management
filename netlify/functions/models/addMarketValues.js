@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const caratSchema = new mongoose.Schema({
+const caratSchema = mongoose.Schema({
     carat: {
         type: String,
         required: true
@@ -19,7 +19,7 @@ const caratSchema = new mongoose.Schema({
     }
 });
 
-const marketValueSchema = new mongoose.Schema(
+const marketValueSchema = mongoose.Schema(
     {
         carats: {
             type: [caratSchema], 

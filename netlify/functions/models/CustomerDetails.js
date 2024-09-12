@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const customerDetailsSchema = new mongoose.Schema(
+const customerDetailsSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -17,11 +17,11 @@ const customerDetailsSchema = new mongoose.Schema(
     }
   },
   {
-    versionKey: false, // Disable the __v field
+    versionKey: false,
   }
 
 );
 
-const customerInfornations = mongoose.model('Customer-Infomations', customerDetailsSchema);
+const customerInfomations = mongoose.model('Customer-Infomations', customerDetailsSchema);
 
-module.exports = customerInfornations;
+module.exports = customerInfomations;
