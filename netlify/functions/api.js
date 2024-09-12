@@ -33,7 +33,7 @@ const router = express.Router();
 
 // Define routes
 router.use('/register', customerRoutes);
-router.use('/application/', applicantRoutes);
+router.use('/application', applicantRoutes);
 router.use('/api/', marketValueRoutes);
 
 
