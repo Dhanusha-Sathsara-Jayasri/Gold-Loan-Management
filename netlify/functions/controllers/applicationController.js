@@ -3,6 +3,11 @@ const applicationModel = require('../models/ApplicantDetails');
 const applicationController = {
     addApplication: async (req, res) => {
         const { customerId, applicantDetails } = req.body;
+
+        if (!Array.isArray(applicantDetails)) {
+            return res.status(400).json({ status: "fail", message: "Applicant Details must be an array" });
+        }
+
         try {
             const newApplication = new applicationModel({
                 customerId,
