@@ -1,4 +1,4 @@
-const customerModel = require('./models/CustomerDetails');
+const customerModel = require('../models/CustomerDetails');
 
 const customerController = {
     addCustomer: async (req, res) => {
