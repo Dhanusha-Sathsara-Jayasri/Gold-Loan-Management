@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const applicantDetailsSchema = new mongoose.Schema({
+const applicantDetailsSchema = mongoose.Schema({
 
   phoneNumber: {
     type: String,
@@ -42,7 +42,7 @@ const applicantDetailsSchema = new mongoose.Schema({
 const customerApplicantSchema = mongoose.Schema({
  
   customerId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Customer'
   },
