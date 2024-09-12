@@ -32,9 +32,9 @@ const applicantRoutes = require('./routes/applicantRoutes');
 const router = express.Router();
 
 // Define routes
-router.use('/api/customers', customerRoutes);
-router.use('/api/marketValues', marketValueRoutes);
-router.use('/api/applicants', applicantRoutes);
+router.use('/api/register', customerRoutes);
+router.use('/api/addMarketValues', marketValueRoutes);
+router.use('/api/ApplicantDetails', applicantRoutes);
 
 app.use('/api/', router);
 module.exports.handler = serverless(app);
