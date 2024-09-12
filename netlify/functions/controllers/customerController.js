@@ -4,19 +4,19 @@ const customerController = {
     addCustomer: async (req, res) => {
         const { name, whatsApp, NIC } = req.body;
         try {
+            const oldCustomer = await customerModel.findOne({ NIC: NIC });
+
+            if (oldCustomer) {
+                return res.send({ status: 'fail', data: "Customer Already Registered" });
+            }
+
             const newCustomer = new customerModel({
                 name,
                 whatsApp,
                 NIC
             });
 
-            const oldCustomer = await customers.findOne({ NIC: NIC });
-  
-            if (oldCustomer) {
-              return res.send({ status: 'fail', data: "Customer Already Registered" });
-            }
-
-            const result = await newCustomer.save();
+            await newCustomer.save();
             res.send({ status: 'success', data: "Customer Registered Successfully", insertedId: newCustomer._id });
 
         } catch (error) {
