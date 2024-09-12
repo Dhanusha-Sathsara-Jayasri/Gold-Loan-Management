@@ -32,7 +32,7 @@ const applicantRoutes = require('./routes/applicantRoutes');
 const router = express.Router();
 
 // Define routes
-router.use('/api/', customerRoutes);
+router.use('/register', customerRoutes);
 router.use('/api/', marketValueRoutes);
 router.use('/api/', applicantRoutes);
 
