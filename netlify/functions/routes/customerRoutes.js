@@ -1,37 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const Customer = require('../models/CustomerDetails');
+// const Customer = require('../models/CustomerDetails');
+
+
+const customerController = require('./controllers/customerController');
+router.post('/register', customerController.addCustomer);
 
 // Register Customer
-router.post('/register', async (req, res) => {
-  const { name, whatsApp, NIC } = req.body;
+// router.post('/register', async (req, res) => {
+//   const { name, whatsApp, NIC } = req.body;
 
-  const oldCustomer = await Customer.findOne({ NIC: NIC });
+//   const oldCustomer = await Customer.findOne({ NIC: NIC });
 
-  if (oldCustomer) {
-    return res.send({ status: 'fail', data: "Customer Already Registered" });
-  }
+//   if (oldCustomer) {
+//     return res.send({ status: 'fail', data: "Customer Already Registered" });
+//   }
 
-  try {
-    const newCustomer = new  Customer({
-      name,
-      whatsApp,
-      NIC
-    });
+//   try {
+//     const newCustomer = new Customer({
+//       name,
+//       whatsApp,
+//       NIC
+//     });
 
-    const result = await newCustomer.save();
+//     const result = await newCustomer.save();
 
-    // res.send({
-    //   status: 'success',
-    //   data: "Customer Registered Successfully",
-    //   insertedId: newCustomer._id
-    // });
+//     // res.send({
+//     //   status: 'success',
+//     //   data: "Customer Registered Successfully",
+//     //   insertedId: newCustomer._id
+//     // });
 
-    res.status(200).json({message:'done',result});
+//     res.status(200).json({message:'done',result});
 
-  } catch (error) {
-    res.status(500).send({ status: "Error While Registering Customer", data: error });
-  }
-});
+//   } catch (error) {
+//     res.status(500).send({ status: "Error While Registering Customer", data: error });
+//   }
+// });
 
 module.exports = router;

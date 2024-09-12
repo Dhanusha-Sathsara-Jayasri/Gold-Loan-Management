@@ -25,16 +25,20 @@ mongoose
 
 // Routes
 const customerRoutes = require('./routes/customerRoutes');
-const marketValueRoutes = require('./routes/marketValueRoutes');
-const applicantRoutes = require('./routes/applicantRoutes');
+// const marketValueRoutes = require('./routes/marketValueRoutes');
+// const applicantRoutes = require('./routes/applicantRoutes');
+
+const customerRoutes = require('./routes/customerRoutes');
 
 // Server starts here
 const router = express.Router();
 
-// Define routes
 router.use('/register', customerRoutes);
-router.use('/api/', marketValueRoutes);
-router.use('/api/', applicantRoutes);
+
+// Define routes
+// router.use('/register', customerRoutes);
+// router.use('/api/', marketValueRoutes);
+// router.use('/api/', applicantRoutes);
 
 router.get('/test', (req, res) => {
   res.send('Hello World');
