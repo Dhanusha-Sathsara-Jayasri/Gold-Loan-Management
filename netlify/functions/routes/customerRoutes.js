@@ -19,11 +19,16 @@ router.post('/register', async (req, res) => {
       NIC
     });
 
-    res.send({
-      status: 'success',
-      data: "Customer Registered Successfully",
-      insertedId: newCustomer._id
-    });
+    const result = await newCustomer.save();
+
+    // res.send({
+    //   status: 'success',
+    //   data: "Customer Registered Successfully",
+    //   insertedId: newCustomer._id
+    // });
+
+    res.status(200).json({message:'done',result});
+
   } catch (error) {
     res.status(500).send({ status: "Error While Registering Customer", data: error });
   }
