@@ -36,7 +36,7 @@ router.use('/api/', customerRoutes);
 router.use('/api/', marketValueRoutes);
 router.use('/api/', applicantRoutes);
 
-router.get('test', (req, res) => {
+router.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
