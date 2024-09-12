@@ -42,7 +42,7 @@ const applicantDetailsSchema = new mongoose.Schema({
 const customerApplicantSchema = mongoose.Schema({
  
   customerId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'Customer'
   },
