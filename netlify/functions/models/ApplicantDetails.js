@@ -39,11 +39,12 @@ const applicantDetailsSchema = new mongoose.Schema({
   versionKey: false, 
 });
 
-const customerApplicantSchema = new mongoose.Schema({
+const customerApplicantSchema = mongoose.Schema({
  
-  customerId:{
-    type: String,
-    required: true
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Customer'
   },
   applicantDetails: {
     type: [applicantDetailsSchema],
