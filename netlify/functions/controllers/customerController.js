@@ -10,10 +10,17 @@ const customerController = {
                 NIC
             });
 
+            const oldCustomer = await customers.findOne({ NIC: NIC });
+  
+            if (oldCustomer) {
+              return res.send({ status: 'fail', data: "Customer Already Registered" });
+            }
+
             const result = await newCustomer.save();
-            res.status(200).json({message:'done',result});
+            res.send({ status: 'success', data: "Customer Registered Successfully", insertedId: newCustomer._id });
+
         } catch (error) {
-            res.status(500).send({ status: "Error While Registering Customer", data: error });
+            res.send({ status: "Error While Registering Customer", data: error });
         }
     }
 };
