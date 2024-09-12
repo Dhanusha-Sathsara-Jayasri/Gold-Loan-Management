@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    const newCustomer = await Customer.create({
+    const newCustomer = new  Customer({
       name,
       whatsApp,
       NIC
