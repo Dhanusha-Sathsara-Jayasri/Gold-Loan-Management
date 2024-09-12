@@ -24,7 +24,6 @@ mongoose
   });
 
 // Routes
-const customerRoutes = require('./routes/customerRoutes');
 // const marketValueRoutes = require('./routes/marketValueRoutes');
 // const applicantRoutes = require('./routes/applicantRoutes');
 
