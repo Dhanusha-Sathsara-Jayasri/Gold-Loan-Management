@@ -29,16 +29,16 @@ const marketValueRoutes = require('./routes/marketValueRoutes');
 const applicantRoutes = require('./routes/applicantRoutes');
 
 // Server starts here
-// const router = express.Router();
+const router = express.Router();
 
 // Define routes
-app.use('/api/customerRegister', customerRoutes);
-app.use('/api/', marketValueRoutes);
-app.use('/api/', applicantRoutes);
+router.use('/api/customerRegister', customerRoutes);
+router.use('/api/', marketValueRoutes);
+router.use('/api/', applicantRoutes);
 
 router.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
-app.use('/api/', app);
+app.use('/api/', router);
 module.exports.handler = serverless(app);
