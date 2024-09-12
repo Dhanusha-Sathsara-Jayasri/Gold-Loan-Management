@@ -3,8 +3,8 @@ const router = express.Router();
 // const Customer = require('../models/CustomerDetails');
 
 
-const customerController = require('./controllers/customerController');
-router.post('/register', customerController.addCustomer);
+const customerController = require('../controllers/customerController');
+router.post('/create', customerController.addCustomer);
 
 // Register Customer
 // router.post('/register', async (req, res) => {
