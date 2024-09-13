@@ -4,4 +4,5 @@ const postSchema = mongoose.Schema({
    myFile: String,
 });
 
-export default mongoose.models.post || mongoose.model('post', postSchema);
+const post = mongoose.model('post', postSchema);
+module.exports = post;
