@@ -1,13 +1,16 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
-const bodyParser = require('./middleware/bodyParser');
+// const bodyParser = require('./middleware/bodyParser');
+const bodyParser = require('body-parser'); 
 
 const app = express();
 
 // Use Middleware
 app.use(cors);
-app.use(bodyParser);
+// app.use(bodyParser);
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Database connection starts here
 const mongoose = require('mongoose');
@@ -37,8 +40,8 @@ const router = express.Router();
 router.use('/register', customerRoutes);
 router.use('/application', applicantRoutes);
 router.use('/mortgageDeed', mortgageDeedRoutes);
-router.use('/api/', marketValueRoutes);
 router.use('/posts', postRoutes); 
+router.use('/api/', marketValueRoutes);
 
 router.get('/test', (req, res) => {
   res.send('Hello World');
