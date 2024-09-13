@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const mortgageDeedSchema = mongoose.Schema({
     institution: { type: String, required: true },
     branch: { type: String, required: true },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
     contactNumber: { type: String, required: true },
     monthlyRate: { type: Number, required: true },
     yearlyRate: { type: Number, required: true },
