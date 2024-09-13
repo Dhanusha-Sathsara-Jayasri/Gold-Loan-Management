@@ -26,7 +26,7 @@ mongoose
 // Routes
 const customerRoutes = require('./routes/customerRoutes');
 const applicantRoutes = require('./routes/applicantRoutes');
-const mortgageDeedRoutes = require('./routes/MortgageDeedRoutes');
+const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes');
 const marketValueRoutes = require('./routes/marketValueRoutes');
 
 // Server starts here

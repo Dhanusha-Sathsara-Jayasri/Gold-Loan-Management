@@ -1,4 +1,4 @@
-const mortgageDeedModel = require('../models/MortgageDeedDetails');
+const mortgageDeedModel = require('../models/mortgageDeedDetails');
 
 const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
