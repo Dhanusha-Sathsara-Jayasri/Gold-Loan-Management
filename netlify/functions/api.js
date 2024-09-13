@@ -26,6 +26,7 @@ mongoose
 // Routes
 const customerRoutes = require('./routes/customerRoutes');
 const applicantRoutes = require('./routes/applicantRoutes');
+const mortgageDeedRoutes = require('./routes/MortgageDeedRoutes');
 const marketValueRoutes = require('./routes/marketValueRoutes');
 
 // Server starts here
@@ -34,6 +35,7 @@ const router = express.Router();
 // Define routes
 router.use('/register', customerRoutes);
 router.use('/application', applicantRoutes);
+router.use('/mortgageDeed', mortgageDeedRoutes);
 router.use('/api/', marketValueRoutes);
 
 
