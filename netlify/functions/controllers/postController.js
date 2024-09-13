@@ -1,4 +1,4 @@
-import Post from '../models/post.model.js'; 
+const Post = require('../models/post.model'); 
 
 const postController = {
     uploadImage: async (req, res) => {
