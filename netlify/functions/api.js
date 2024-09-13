@@ -38,6 +38,21 @@ router.use('/application', applicantRoutes);
 router.use('/mortgageDeed', mortgageDeedRoutes);
 router.use('/api/', marketValueRoutes);
 
+import Post from './models/post.model.js';
+router.post('/upload',async(req,res)=> {
+
+  const body = req.body;
+
+  try{
+    const newImage = await Post.create(body);
+    newImage.save();
+    res.status(201).json({msg:"Image Uploaded...  "});
+  }catch(error){
+    res.status(409).json({message:error.message});
+  }
+
+});
+
 
 router.get('/test', (req, res) => {
   res.send('Hello World');
