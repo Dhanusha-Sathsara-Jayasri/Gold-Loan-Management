@@ -6,5 +6,5 @@ const postSchema = mongoose.Schema({
    versionKey: false, 
 });
 
-const post = mongoose.model('', postSchema);
+const post = mongoose.model('post-application-images', postSchema);
 module.exports = post;
