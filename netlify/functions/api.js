@@ -1,18 +1,16 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
+// const bodyParser = require('./middleware/bodyParser');
 const bodyParser = require('body-parser'); 
-const path = require('path');
 
 const app = express();
 
 // Use Middleware
 app.use(cors);
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-// Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use(bodyParser);
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Database connection starts here
 const mongoose = require('mongoose');
