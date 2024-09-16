@@ -1,12 +1,14 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
+// const bodyParser = require('./middleware/bodyParser');
 const bodyParser = require('body-parser'); 
 
 const app = express();
 
 // Use Middleware
-app.use(cors);  
+app.use(cors);
+// app.use(bodyParser);
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
