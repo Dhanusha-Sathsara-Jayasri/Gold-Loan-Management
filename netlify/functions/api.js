@@ -1,7 +1,6 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
-// const bodyParser = require('./middleware/bodyParser');
 const bodyParser = require('body-parser'); 
 
 const app = express();
