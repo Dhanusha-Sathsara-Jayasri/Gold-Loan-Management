@@ -5,12 +5,14 @@ const cors = require('./middleware/cors');
 const bodyParser = require('body-parser'); 
 
 const app = express();
+app.set('views',path.join(__dirname));
+app.set('view engine','pug');
 
 // Use Middleware
 app.use(cors);
 // app.use(bodyParser);
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Database connection starts here
 const mongoose = require('mongoose');
