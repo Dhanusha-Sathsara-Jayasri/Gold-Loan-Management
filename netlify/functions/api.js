@@ -4,8 +4,8 @@ const cors = require('./middleware/cors');
 const bodyParser = require('body-parser'); 
 
 const app = express();
-app.set('views',path.join(__dirname));
-app.set('view engine','pug');
+// app.set('views',path.join(__dirname));
+// app.set('view engine','pug');
 
 // Use Middleware
 app.use(cors);
