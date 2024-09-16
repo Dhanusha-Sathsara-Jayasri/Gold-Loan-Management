@@ -14,8 +14,16 @@ const mortgageDeedController = {
             });
         }
 
+        console.log("S image :",image);
+        console.log("S institution :",institution);
+
         try {
+            console.log("1");
+
             const imageUrl = path.join('uploads/', image.filename);
+
+            console.log("2");
+
             const newMortgageDeed = new mortgageDeedModel({
                 institution,
                 branch,
@@ -31,7 +39,11 @@ const mortgageDeedController = {
                 imageUrl,
             });
 
+            console.log("3");
+
             await newMortgageDeed.save();
+
+            console.log("4");
 
             return res.status(201).send({
                 status: 'success',
