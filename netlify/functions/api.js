@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 // Database connection starts here
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0'
-// const url = 'mongodb+srv://intelmdb3gold:P6lJGy1cv64bl7Tf@gold-loans.bs6xu.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Gold-Loans'
+//const url = 'mongodb+srv://intelmdb3gold:P6lJGy1cv64bl7Tf@gold-loans.bs6xu.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Gold-Loans'
 
 mongoose
   .connect(url, {
