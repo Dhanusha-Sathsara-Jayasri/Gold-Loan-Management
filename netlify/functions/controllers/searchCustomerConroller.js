@@ -5,7 +5,7 @@ const searchCustomerController = {
         const { NIC, whatsApp } = req.body;
 
         try {
-            // Create a query object based on the provided parameters
+
             const query = {};
             if (NIC) {
                 query.NIC = NIC;
@@ -14,7 +14,6 @@ const searchCustomerController = {
                 query.whatsApp = whatsApp;
             }
 
-            // Find the customer based on the query
             const customer = await customerModel.findOne(query);
 
             if (customer) {
