@@ -1,10 +1,27 @@
 const mortgageDeedModel = require('../models/mortgageDeedDetails');
+const mongoose = require('mongoose');
 
+// Controller to handle adding a mortgage deed
 const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
-        const { institution, branch, startDate, endDate, contactNumber, monthlyRate, yearlyRate, receiptNumber, appraisedValue, mortgageAmount, rescueAmount, imageUrl } = req.body;
+        const {
+            institution, branch, startDate, endDate, contactNumber, 
+            monthlyRate, yearlyRate, receiptNumber, appraisedValue, 
+            mortgageAmount, rescueAmount
+        } = req.body;
 
         try {
+            // Ensure all required fields are present
+            if (!institution || !branch || !startDate || !endDate || !contactNumber) {
+                return res.status(400).send({ status: 'fail', message: 'Missing required fields' });
+            }
+
+            // Ensure the file has been uploaded
+            if (!req.file) {
+                return res.status(400).send({ status: 'fail', message: 'No image file provided' });
+            }
+
+            // Create new mortgage deed object with the GridFS file reference (file._id)
             const newMortgageDeed = new mortgageDeedModel({
                 institution,
                 branch,
@@ -17,13 +34,25 @@ const mortgageDeedController = {
                 appraisedValue,
                 mortgageAmount,
                 rescueAmount,
-                imageUrl
+                imageFileId: mongoose.Types.ObjectId(req.file.id) // Referencing the GridFS file ID
             });
+
+            // Save the new mortgage deed in MongoDB
             await newMortgageDeed.save();
-            // res.send({ status: 'success', data: "Mortgage Deed Added Successfully", insertedId: newMortgageDeed._id });
-            res.send({ status: 'success', data: "Mortgage Deed Added Successfully"});
+
+            // Send a success response
+            return res.status(201).send({ 
+                status: 'success', 
+                message: "Mortgage Deed added successfully", 
+                insertedId: newMortgageDeed._id 
+            });
         } catch (error) {
-            res.send({ status: "Error While Adding Mortgage Deed", data: error });
+            console.error('Error while adding mortgage deed:', error);
+            return res.status(500).send({ 
+                status: 'error', 
+                message: 'Error while adding mortgage deed', 
+                error: error.message 
+            });
         }
     }
 };
