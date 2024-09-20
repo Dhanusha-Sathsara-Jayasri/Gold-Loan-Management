@@ -13,7 +13,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Database connection
-const url = 'your-mongodb-url';
+const url = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
