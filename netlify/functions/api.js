@@ -3,7 +3,7 @@ const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const multer = require('multer');
+const multer = require('multer');  // Ensure multer is imported
 const { GridFsStorage } = require('multer-gridfs-storage');
 
 // Use Middleware
@@ -29,13 +29,13 @@ const storage = new GridFsStorage({
   url: url,
   file: (req, file) => {
     return {
-      filename: file.originalname, // You can customize this
+      filename: file.originalname,
       bucketName: 'uploads', // Name of the GridFS bucket
     };
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage }); // This is the multer instance
 
 // Importing routes
 const customerRoutes = require('./routes/customerRoutes');
@@ -50,7 +50,7 @@ const router = express.Router();
 // Define routes
 router.use('/register', customerRoutes);
 router.use('/application', applicantRoutes);
-router.use('/mortgageDeed', mortgageDeedRoutes);
+router.use('/mortgageDeed', mortgageDeedRoutes); // Ensure this uses the correct 'upload'
 router.use('/posts', postRoutes);
 router.use('/api/', marketValueRoutes);
 
