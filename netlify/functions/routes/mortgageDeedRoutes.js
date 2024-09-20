@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const upload = multer({ storage });
+module.exports = (upload) => {
+    const mortgageDeedController = require('../controllers/mortgageDeedController');
 
-const mortgageDeedController = require('../controllers/mortgageDeedController');
-router.post('/addMortgageDeed', upload.single('file'), mortgageDeedController.addMortgageDeed);
-module.exports = router;
+    // Route to add a mortgage deed (with image file)
+    router.post('/addMortgageDeed', upload.single('file'), mortgageDeedController.addMortgageDeed);
+
+    return router;
+};
