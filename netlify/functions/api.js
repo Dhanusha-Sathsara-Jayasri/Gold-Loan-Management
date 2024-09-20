@@ -9,8 +9,8 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 // Use Middleware
 const app = express();
 app.use(cors());
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Database connection
 const url = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0';
@@ -36,7 +36,10 @@ const storage = new GridFsStorage({
   },
 });
 
-const upload = multer({ storage }); // This is the multer instance
+const upload = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 }  // Set the file size limit to 50MB
+});
 
 // Importing routes
 const customerRoutes = require('./routes/customerRoutes');

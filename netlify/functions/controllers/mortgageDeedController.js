@@ -34,7 +34,7 @@ const mortgageDeedController = {
                 appraisedValue,
                 mortgageAmount,
                 rescueAmount,
-                imageFileId: mongoose.Types.ObjectId(req.file.id) // Referencing the GridFS file ID
+                imageFileId: mongoose.Types.ObjectId(req.file.id || req.file._id)
             });
 
             // Save the new mortgage deed in MongoDB
