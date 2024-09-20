@@ -1,24 +1,25 @@
 const express = require('express');
 const serverless = require('serverless-http');
-const cors = require('./middleware/cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const multer = require('multer');  // Ensure multer is imported
+const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 
 // Use Middleware
 const app = express();
-app.use(cors);
+app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Database connection
-const url = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0';
-const connection = mongoose.createConnection(url, {
+const url = 'your-mongodb-url';
+mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
+const connection = mongoose.connection;
 let gfs;
 connection.once('open', () => {
   gfs = new mongoose.mongo.GridFSBucket(connection.db, { bucketName: 'uploads' });
@@ -39,29 +40,13 @@ const upload = multer({ storage }); // This is the multer instance
 
 // Importing routes
 const customerRoutes = require('./routes/customerRoutes');
-const applicantRoutes = require('./routes/applicantRoutes');
-const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes')(upload); // Pass 'upload' to mortgageDeedRoutes
-const marketValueRoutes = require('./routes/marketValueRoutes');
-const postRoutes = require('./routes/postRoutes');
+const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes')(upload); // Call the route as a function and pass 'upload'
 
-// Server starts here
-const router = express.Router();
+app.use('/api/customers', customerRoutes); // Customer routes
+app.use('/api/mortgageDeed', mortgageDeedRoutes); // Mortgage routes with file upload
 
-// Define routes
-router.use('/register', customerRoutes);
-router.use('/application', applicantRoutes);
-router.use('/mortgageDeed', mortgageDeedRoutes); // Ensure this uses the correct 'upload'
-router.use('/posts', postRoutes);
-router.use('/api/', marketValueRoutes);
-
-router.get('/test', (req, res) => {
+app.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
-app.use('/api/', router);
-
-// Export app handler with serverless
 module.exports.handler = serverless(app);
-
-// Export upload for use in routes
-module.exports.upload = upload;
