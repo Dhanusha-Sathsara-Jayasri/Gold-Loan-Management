@@ -40,7 +40,7 @@ const postRoutes = require('./routes/postRoutes');
 const router = express.Router();
 
 // Define routes
-router.use('/register', customerRoutes);
+router.use('/customers', customerRoutes);
 router.use('/application', applicantRoutes);
 router.use('/mortgageDeed', mortgageDeedRoutes);
 router.use('/posts', postRoutes); 
