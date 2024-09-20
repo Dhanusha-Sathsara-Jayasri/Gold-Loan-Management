@@ -3,8 +3,8 @@ const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const busboy = require('busboy'); // Add busboy for multipart form parsing
-const path = require('path'); // For handling file paths (optional)
+const busboy = require('busboy');
+const path = require('path'); 
 
 const app = express();
 

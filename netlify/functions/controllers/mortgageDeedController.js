@@ -1,22 +1,25 @@
 const mortgageDeedModel = require('../models/mortgageDeedDetails');
+const sharp = require('sharp'); // Import Sharp for image compression
 
 const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
-        // Destructure form fields from req.body
         const { institution, branch, startDate, endDate, contactNumber, monthlyRate, yearlyRate, receiptNumber, appraisedValue, mortgageAmount, rescueAmount } = req.body;
-        
-        // Access the uploaded image from req.file
-        const imageFile = req.file; // req.file is populated by multer if the image was uploaded
-        
+        const imageFile = req.file; // Access the uploaded image from Multer
+
         try {
-            // Process the image if it exists
-            let imageUrl = null;
+            let compressedImage = null;
             if (imageFile) {
-                // Convert the image to base64 if you want to store it in MongoDB
-                imageUrl = imageFile.buffer.toString('base64');
+                // Compress the image using Sharp
+                compressedImage = await sharp(imageFile.buffer)
+                    .resize({ width: 1024 }) // Resize image to max width of 1024px while maintaining aspect ratio
+                    .jpeg({ quality: 80 })   // Compress to JPEG with 80% quality
+                    .toBuffer();             // Convert back to buffer
+
+                // Convert the compressed image to base64 for storage in MongoDB (if needed)
+                const imageUrl = compressedImage.toString('base64');
             }
 
-            // Create a new Mortgage Deed document with the provided form data and image URL
+            // Create a new Mortgage Deed document with the provided form data and the compressed image
             const newMortgageDeed = new mortgageDeedModel({
                 institution,
                 branch,
@@ -29,16 +32,16 @@ const mortgageDeedController = {
                 appraisedValue,
                 mortgageAmount,
                 rescueAmount,
-                imageUrl // Save the base64 image string or file reference here
+                imageUrl: compressedImage ? compressedImage.toString('base64') : null // Save the base64 string of the compressed image
             });
 
-            // Save the new document to the database
+            // Save the document to the database
             await newMortgageDeed.save();
 
-            // Send a success response
+            // Respond with success
             res.send({ status: 'success', data: 'Mortgage Deed Added Successfully' });
         } catch (error) {
-            // Handle any errors during saving
+            // Handle errors
             res.send({ status: 'Error While Adding Mortgage Deed', data: error.message });
         }
     }
