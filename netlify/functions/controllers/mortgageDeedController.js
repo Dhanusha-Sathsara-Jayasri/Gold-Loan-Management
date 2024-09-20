@@ -11,6 +11,11 @@ const mortgageDeedController = {
         } = req.body;
 
         try {
+            // Ensure all required fields are present
+            if (!institution || !branch || !startDate || !endDate || !contactNumber) {
+                return res.status(400).send({ status: 'fail', message: 'Missing required fields' });
+            }
+
             // Ensure the file has been uploaded
             if (!req.file) {
                 return res.status(400).send({ status: 'fail', message: 'No image file provided' });

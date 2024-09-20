@@ -30,9 +30,9 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     return {
       filename: file.originalname,
-      bucketName: 'uploads' // Name of the GridFS bucket
+      bucketName: 'uploads', // Name of the GridFS bucket
     };
-  }
+  },
 });
 
 const upload = multer({ storage });
@@ -40,7 +40,7 @@ const upload = multer({ storage });
 // Routes
 const customerRoutes = require('./routes/customerRoutes');
 const applicantRoutes = require('./routes/applicantRoutes');
-const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes');
+const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes')(upload); // Pass upload to mortgageDeedRoutes
 const marketValueRoutes = require('./routes/marketValueRoutes');
 const postRoutes = require('./routes/postRoutes');
 
@@ -59,4 +59,9 @@ router.get('/test', (req, res) => {
 });
 
 app.use('/api/', router);
+
+// Export app handler with serverless
 module.exports.handler = serverless(app);
+
+// Export upload for use in routes
+module.exports.upload = upload;
