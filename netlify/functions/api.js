@@ -42,11 +42,14 @@ const upload = multer({ storage }); // This is the multer instance
 const customerRoutes = require('./routes/customerRoutes');
 const mortgageDeedRoutes = require('./routes/mortgageDeedRoutes')(upload); // Call the route as a function and pass 'upload'
 
-app.use('/api/customers', customerRoutes); // Customer routes
-app.use('/api/mortgageDeed', mortgageDeedRoutes); // Mortgage routes with file upload
+const router = express.Router();
 
-app.get('/test', (req, res) => {
+router.use('/customers', customerRoutes); // Customer routes
+router.use('/mortgageDeed', mortgageDeedRoutes); // Mortgage routes with file upload
+
+router.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
+app.use('/api/', router);
 module.exports.handler = serverless(app);
