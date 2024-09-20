@@ -14,14 +14,12 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Database connection
 const url = 'mongodb+srv://admin:admin@cluster0.gzqwq.mongodb.net/Gold-Loan-Management?retryWrites=true&w=majority&appName=Cluster0';
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-const connection = mongoose.connection;
-connection.on('error', (err) => console.error('MongoDB connection error:', err));
-connection.once('open', () => {
-  console.log('MongoDB connected');
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
+const connection = mongoose.connection;
 let gfs;
 connection.once('open', () => {
   gfs = new mongoose.mongo.GridFSBucket(connection.db, { bucketName: 'uploads' });
