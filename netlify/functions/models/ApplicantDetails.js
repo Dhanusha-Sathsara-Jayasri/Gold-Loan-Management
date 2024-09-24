@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const applicantDetailsSchema = mongoose.Schema({
-
   phoneNumber: {
     type: String,
     required: true,
@@ -33,14 +32,16 @@ const applicantDetailsSchema = mongoose.Schema({
     type: String,
     enum: ['Married', 'Unmarried'],
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-},
-{
+}, {
   versionKey: false, 
 });
 
 const customerApplicantSchema = mongoose.Schema({
- 
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -50,9 +51,7 @@ const customerApplicantSchema = mongoose.Schema({
     type: [applicantDetailsSchema],
     required: true
   }
-
-},
-{
+}, {
   versionKey: false, 
 });
 
