@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+
 
 const adminDataSchema = mongoose.Schema(
   {
@@ -33,13 +33,6 @@ const adminDataSchema = mongoose.Schema(
     versionKey: false,
   }
 );
-
-adminDataSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
-});
 
 const AdminData = mongoose.model('Admin-Data-Details', adminDataSchema);
 module.exports = AdminData;

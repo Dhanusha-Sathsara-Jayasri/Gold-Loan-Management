@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('./middleware/cors');
@@ -10,7 +9,6 @@ const app = express();
 app.use(cors);
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-const JWT_SECRET = process.env.JWT_SECRET;
 
 // Database connection starts here
 const mongoose = require('mongoose');
@@ -49,6 +47,10 @@ router.use('/posts', postRoutes);
 router.use('/api/', marketValueRoutes);
 
 router.get('/test', (req, res) => {
+  res.send('Hello World');
+});
+
+router.get('/test2', (req, res) => {
   res.send('Hello World');
 });
 
