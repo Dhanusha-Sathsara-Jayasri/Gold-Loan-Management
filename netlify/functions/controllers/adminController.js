@@ -45,8 +45,6 @@ const adminDataController = {
             if (!admin) {
                 return res.status(401).send({ status: 'fail', message: 'Invalid credentials' });
             }
-
-            // Compare the password with the hashed password
             const isMatch = await bcrypt.compare(password, admin.password);
             if (!isMatch) {
                 return res.status(401).send({ status: 'fail', message: 'Invalid credentials' });

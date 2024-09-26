@@ -6,5 +6,5 @@ const postSchema = mongoose.Schema({
    versionKey: false, 
 });
 
-const post = mongoose.model('', postSchema);
+const post = mongoose.model('test', postSchema);
 module.exports = post;
