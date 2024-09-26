@@ -59,7 +59,7 @@ const adminDataController = {
                 expiresIn: '1h'
             });
 
-            res.send({ status: 'success', token, userStatus: admin.userType, data: admin });
+            res.send({ status:admin.userType, token, data: admin });
             
         } catch (error) {
             res.status(500).send({ status: "Error", message: 'Server error' });
