@@ -48,10 +48,8 @@ const adminDataController = {
             if (!isMatch) {
                 return res.status(401).send({ status: 'fail', message: 'Invalid credentials' });
             }
+            
             console.log(isMatch);
-
-            // const token = jwt.sign({ id: admin._id, userType: admin.userType }, JWT_SECRET, { expiresIn: '1h' });
-            // res.send({ status: 'success', token, userStatus: admin.userType, data: admin });
 
             const token=jwt.sign({
                 id: admin._id,
