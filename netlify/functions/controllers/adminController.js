@@ -9,22 +9,24 @@ const adminDataController = {
         const { userType, fullName, NIC, userName, password } = req.body;
 
         try {
+            // Hash the password before saving
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
             const newAdminData = new AdminData({
                 userType,
                 fullName,
                 NIC,
                 userName,
-                password
+                password: hashedPassword  // Use the hashed password here
             });
-            await newAdminData.save();
-            // res.send({ status: 'success', data: "Admin Data Added Successfully" });
 
-            const token=jwt.sign({
-                userType:newAdminData.userType,
-                id:newAdminData._id
-            },
-            JWT_SECRET,
-            {
+            await newAdminData.save();
+
+            const token = jwt.sign({
+                userType: newAdminData.userType,
+                id: newAdminData._id
+            }, JWT_SECRET, {
                 expiresIn: '1h'
             });
 
@@ -44,14 +46,13 @@ const adminDataController = {
                 return res.status(401).send({ status: 'fail', message: 'Invalid credentials' });
             }
 
+            // Compare the password with the hashed password
             const isMatch = await bcrypt.compare(password, admin.password);
             if (!isMatch) {
                 return res.status(401).send({ status: 'fail', message: 'Invalid credentials' });
             }
-            
-            console.log(isMatch);
 
-            const token=jwt.sign({
+            const token = jwt.sign({
                 id: admin._id,
                 userType: admin.userType
             }, JWT_SECRET, {
