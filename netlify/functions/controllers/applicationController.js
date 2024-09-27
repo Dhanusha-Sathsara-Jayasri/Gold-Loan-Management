@@ -61,7 +61,7 @@ const applicationController = {
                 })
                 .exec();
 
-            res.status(200).json({ status: 'successe', data: applications });
+            res.status(200).json({ status: 'success', data: applications });
         } catch (error) {
             res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
         }
