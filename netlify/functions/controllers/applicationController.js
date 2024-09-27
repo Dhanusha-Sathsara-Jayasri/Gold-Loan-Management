@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const customerApplicantDetails = require('../models/Customer-Applicant-Details');
+const customerApplicantDetails = require('../models/AdminDetails');
 const customerInfomations = require('../models/Customer-Infomations');
 
 const applicationController = {
