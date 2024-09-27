@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
-const applicationModel = require('../models/ApplicantDetails');
+const customerApplicantDetails = require('../models/Customer-Applicant-Details');
+const customerInfomations = require('../models/Customer-Infomations');
 
 const applicationController = {
     addApplication: async (req, res) => {
         const { customerId, applicantDetails } = req.body;
 
+        // Validate applicantDetails is an array
         if (!Array.isArray(applicantDetails)) {
             return res.status(400).json({ status: "fail", message: "Applicant Details must be an array" });
         }
 
+        // Validate customerId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(customerId)) {
             return res.status(400).json({ status: "fail", message: "Invalid Customer ID" });
         }
 
+        // Validate each applicant detail
         for (let applicant of applicantDetails) {
             const { phoneNumber, gender, maritalStatus } = applicant;
 
@@ -33,7 +37,8 @@ const applicationController = {
         }
 
         try {
-            const newApplication = new applicationModel({
+            // Create a new application
+            const newApplication = new customerApplicantDetails({
                 customerId,
                 applicantDetails
             });
@@ -43,7 +48,24 @@ const applicationController = {
         } catch (error) {
             res.status(500).json({ status: "fail", message: "Error While Registering Application", data: error });
         }
-    }
+    },
+
+    getApplications: async (req, res) => {
+        try {
+            const applications = await customerApplicantDetails
+                .find({})
+                .populate({
+                    path: 'customerId',
+                    model: customerInfomations,
+                    select: 'name whatsApp NIC',
+                })
+                .exec();
+
+            res.status(200).json({ status: 'successe', data: applications });
+        } catch (error) {
+            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+        }
+    },
 };
 
 module.exports = applicationController;

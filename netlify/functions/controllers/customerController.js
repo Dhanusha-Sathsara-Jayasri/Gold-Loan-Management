@@ -33,6 +33,15 @@ const customerController = {
         } catch (error) {
             res.send({ status: 'error', data: "Error While Registering Customer", error: error });
         }
+    },
+
+    getCustomers: async (req, res) => {
+        try {
+            const customers = await customerModel.find({});
+            res.send({ status: 'success', data: customers });
+        } catch (error) {
+            res.send({ status: 'error', data: "Error While Fetching Customers", error: error });
+        }
     }
 };
 

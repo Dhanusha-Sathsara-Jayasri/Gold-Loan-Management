@@ -45,14 +45,14 @@ const customerApplicantSchema = mongoose.Schema({
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Customer'
+    ref: 'Customer-Infomations' 
   },
   applicantDetails: {
     type: [applicantDetailsSchema],
     required: true
   }
 }, {
-  versionKey: false, 
+  versionKey: false,
 });
 
 const customerApplicantDetails = mongoose.model('Customer-Applicant-Details', customerApplicantSchema);

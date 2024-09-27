@@ -9,7 +9,6 @@ const adminDataController = {
         const { userType, fullName, NIC, userName, password } = req.body;
 
         try {
-            // Hash the password before saving
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -18,7 +17,7 @@ const adminDataController = {
                 fullName,
                 NIC,
                 userName,
-                password: hashedPassword  // Use the hashed password here
+                password: hashedPassword 
             });
 
             await newAdminData.save();
