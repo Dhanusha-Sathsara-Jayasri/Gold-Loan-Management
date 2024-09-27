@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const customerApplicantDetails = require('../models/AdminDetails');
-const customerInfomations = require('../models/Customer-Infomations');
+const customerInfomations = require('../models/CustomerDetails');
 
 const applicationController = {
     addApplication: async (req, res) => {
