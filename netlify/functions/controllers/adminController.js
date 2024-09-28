@@ -77,12 +77,12 @@ const adminDataController = {
                 .populate({
                     path: 'customerId',
                     model: customerInfomations,
-                    select: 'whatsApp NIC',
+                    select: 'name whatsApp NIC',
                 })
                 .populate({
                     path: 'customerApplicantDetailsId',
                     model: customerApplicantDetails,
-                    select: 'phoneNumber addressLine1 addressLine2 divisionalSecretariatDivision district gender maritalStatus createdAt',
+                    select: 'phoneNumber',
                 })
                 .exec();
 
