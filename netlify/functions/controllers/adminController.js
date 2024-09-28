@@ -70,45 +70,33 @@ const adminDataController = {
     },
 
     getApplicantDetails: async (req, res) => {
-        let applications = [];
-        let mortgageDeeds = [];
-    
+
         try {
-            applications = await customerApplicantDetails
+            const mortgageDeeds = await customerMortgageDeedInformations
                 .find({})
                 .populate({
                     path: 'customerId',
                     model: customerInfomations,
                     select: 'name whatsApp NIC',
                 })
-                .exec();
-        } catch (error) {
-            return res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
-        }
-    
-        try {
-            mortgageDeeds = await customerMortgageDeedInformations
-                .find({})
                 .populate({
-                    path: 'customerId',
-                    model: customerInfomations,
-                    select: 'name whatsApp NIC',
+                    path: 'applicantDetailsId',
+                    model: customerApplicantDetails,
+                    select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
                 })
                 .exec();
+
+            res.status(200).json({
+                status: 'success',
+                data: {
+                    mortgageDeeds
+                },
+            });
+
         } catch (error) {
             return res.status(500).json({ status: "fail", message: "Error While Fetching Mortgage Deeds", data: error });
         }
-    
-        res.status(200).json({
-            status: 'success',
-            data: {
-                applications,
-                mortgageDeeds,
-            },
-        });
     }
-    
-
 
 };
 

@@ -3,7 +3,7 @@ const mortgageDeedModel = require('../models/mortgageDeedDetails');
 
 const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
-        const { customerId, mortgageDeed } = req.body;
+        const { customerId, applicantDetailsId, mortgageDeed } = req.body;
         console.log(req.body);
 
         if (!Array.isArray(mortgageDeed)) {
@@ -14,18 +14,14 @@ const mortgageDeedController = {
             return res.status(400).json({ status: "fail", message: "Invalid Customer ID" });
         }
 
-        for (let deed of mortgageDeed) {
-            const { institution, branch, startDate, endDate, contactNumber, monthlyRate, yearlyRate, receiptNumber, appraisedValue, mortgageAmount, rescueAmount } = deed;
-
-            if (!institution || !branch || !startDate || !endDate || !receiptNumber || !appraisedValue || !mortgageAmount || !rescueAmount || !contactNumber) {
-                return res.status(400).json({ status: "fail", message: "All mortgage deed fields are required" });
-            }
-
+        if (!mongoose.Types.ObjectId.isValid(applicantDetailsId)) {
+            return res.status(400).json({ status: "fail", message: "Invalid Applicant Details ID" });
         }
 
         try {
             const newMortgageDeed = new mortgageDeedModel({
                 customerId,
+                applicantDetailsId,
                 mortgageDeed
             });
 
