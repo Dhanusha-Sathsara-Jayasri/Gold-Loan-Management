@@ -69,7 +69,7 @@ const adminDataController = {
         }
     },
 
-    getApplications: async (req, res) => {
+    getApplicantDetails: async (req, res) => {
         try {
             const applications = await customerApplicantDetails
             .find({})
