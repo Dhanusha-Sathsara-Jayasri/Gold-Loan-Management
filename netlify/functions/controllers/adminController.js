@@ -23,7 +23,7 @@ const adminDataController = {
                 fullName,
                 NIC,
                 userName,
-                password: hashedPassword 
+                password: hashedPassword
             });
 
             await newAdminData.save();
@@ -62,31 +62,51 @@ const adminDataController = {
                 expiresIn: '1h'
             });
 
-            res.send({ status:admin.userType, token, data: admin });
-            
+            res.send({ status: admin.userType, token, data: admin });
+
         } catch (error) {
             res.status(500).send({ status: "Error", message: 'Server error' });
         }
     },
 
     getApplicantDetails: async (req, res) => {
+
+        const applications = [{}];
+        const mortgageDeeds = [{}];
+
         try {
-            const applications = await customerApplicantDetails
+            applications = await customerApplicantDetails
                 .find({})
                 .populate({
                     path: 'customerId',
-                    model: customerInfomations, 
+                    model: customerInfomations,
                     select: 'name whatsApp NIC',
                 })
                 .exec();
-    
+
             res.status(200).json({ status: 'success', data: applications });
         } catch (error) {
             res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
         }
+
+        try {
+            mortgageDeeds = await customerMortgageDeedInformations
+                .find({})
+                .populate({
+                    path: 'customerId',
+                    model: customerInfomations,
+                    select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
+                })
+                .exec();
+
+            res.status(200).json({ status: 'success', data: applications });
+            res.status(200).json({ status: 'success', data: mortgageDeeds });
+        } catch (error) {
+            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+        }
     }
-    
-    
+
+
 };
 
 module.exports = adminDataController;
