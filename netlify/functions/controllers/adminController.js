@@ -70,11 +70,11 @@ const adminDataController = {
     },
 
     getApplicantDetails: async (req, res) => {
-
-        const applications = [{}];
-        const mortgageDeeds = [{}];
-
+        let applications = [];
+        let mortgageDeeds = [];
+    
         try {
+            // Fetching customer applicant details
             applications = await customerApplicantDetails
                 .find({})
                 .populate({
@@ -83,13 +83,12 @@ const adminDataController = {
                     select: 'name whatsApp NIC',
                 })
                 .exec();
-
-            res.status(200).json({ status: 'success', data: applications });
         } catch (error) {
-            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+            return res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
         }
-
+    
         try {
+            // Fetching customer mortgage deed informations
             mortgageDeeds = await customerMortgageDeedInformations
                 .find({})
                 .populate({
@@ -98,13 +97,20 @@ const adminDataController = {
                     select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
                 })
                 .exec();
-
-            res.status(200).json({ status: 'success', data: applications });
-            res.status(200).json({ status: 'success', data: mortgageDeeds });
         } catch (error) {
-            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+            return res.status(500).json({ status: "fail", message: "Error While Fetching Mortgage Deeds", data: error });
         }
+    
+        // Sending both data sets in a single response
+        res.status(200).json({
+            status: 'success',
+            data: {
+                applications,
+                mortgageDeeds,
+            },
+        });
     }
+    
 
 
 };
