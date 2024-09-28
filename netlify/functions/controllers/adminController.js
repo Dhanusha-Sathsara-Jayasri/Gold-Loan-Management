@@ -77,7 +77,7 @@ const adminDataController = {
                 .populate({
                     path: 'customerId',
                     model: customerInfomations,
-                    select: 'name whatsApp NIC',
+                    select: 'whatsApp NIC',
                 })
                 .populate({
                     path: 'customerApplicantDetailsId',
