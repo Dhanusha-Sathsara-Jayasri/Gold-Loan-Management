@@ -6,6 +6,6 @@ const adminController = require('../controllers/adminController');
 router.post('/apply', adminController.addAdminData);
 router.post('/search', adminController.loginAdmin); 
 
-router.post('/marketingExecutive', adminController.getApplicantDetails);
+router.post('/getApplicantDetails', adminController.getApplicantDetails);
 
 module.exports = router;
