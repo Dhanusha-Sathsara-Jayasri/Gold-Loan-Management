@@ -25,7 +25,7 @@ const customerMortgageDeedScheema = mongoose.Schema({
     ref: 'Customer-Infomations',
     required: true
   },
-  applicantDetailsId:{
+  customerApplicantDetailsId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer-Applicant-Details',
     required: true
