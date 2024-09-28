@@ -5,6 +5,8 @@ const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
         const { customerId, mortgageDeed } = req.body;
 
+        console.log(req.body);
+
         if (!Array.isArray(mortgageDeed)) {
             return res.status(400).json({ status: "fail", message: "Mortgage Deed details must be an array" });
         }
