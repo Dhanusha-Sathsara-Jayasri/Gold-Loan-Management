@@ -82,7 +82,7 @@ const adminDataController = {
                 .populate({
                     path: 'customerApplicantDetailsId',
                     model: customerApplicantDetails,
-                    select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
+                    select: 'phoneNumber addressLine1 addressLine2 divisionalSecretariatDivision district gender maritalStatus createdAt',
                 })
                 .exec();
 
