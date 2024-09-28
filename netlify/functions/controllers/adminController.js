@@ -74,7 +74,6 @@ const adminDataController = {
         let mortgageDeeds = [];
     
         try {
-            // Fetching customer applicant details
             applications = await customerApplicantDetails
                 .find({})
                 .populate({
@@ -88,7 +87,6 @@ const adminDataController = {
         }
     
         try {
-            // Fetching customer mortgage deed informations
             mortgageDeeds = await customerMortgageDeedInformations
                 .find({})
                 .populate({
@@ -101,7 +99,6 @@ const adminDataController = {
             return res.status(500).json({ status: "fail", message: "Error While Fetching Mortgage Deeds", data: error });
         }
     
-        // Sending both data sets in a single response
         res.status(200).json({
             status: 'success',
             data: {
