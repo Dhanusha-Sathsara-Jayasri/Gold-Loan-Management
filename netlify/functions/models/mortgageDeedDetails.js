@@ -29,7 +29,7 @@ const customerMortgageDeedScheema = mongoose.Schema({
     type: [mortgageDeedSchema],
     required: true
   },
-  versionKey: false
+  versionKey: false,
 })
 
 const mortgageDeed = mongoose.model('Mortgage-Deed', customerMortgageDeedScheema);
