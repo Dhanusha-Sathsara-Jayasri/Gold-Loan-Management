@@ -4,7 +4,6 @@ const mortgageDeedModel = require('../models/mortgageDeedDetails');
 const mortgageDeedController = {
     addMortgageDeed: async (req, res) => {
         const { customerId, mortgageDeed } = req.body;
-
         console.log(req.body);
 
         if (!Array.isArray(mortgageDeed)) {
@@ -18,17 +17,10 @@ const mortgageDeedController = {
         for (let deed of mortgageDeed) {
             const { institution, branch, startDate, endDate, contactNumber, monthlyRate, yearlyRate, receiptNumber, appraisedValue, mortgageAmount, rescueAmount } = deed;
 
-            if (contactNumber.length !== 10 || isNaN(contactNumber)) {
-                return res.status(400).json({ status: "fail", message: "Invalid Contact Number, it must be exactly 10 digits" });
-            }
-
-            if (!institution || !branch || !startDate || !endDate || !receiptNumber || !appraisedValue || !mortgageAmount || !rescueAmount) {
+            if (!institution || !branch || !startDate || !endDate || !receiptNumber || !appraisedValue || !mortgageAmount || !rescueAmount || !contactNumber) {
                 return res.status(400).json({ status: "fail", message: "All mortgage deed fields are required" });
             }
 
-            if (isNaN(monthlyRate) || isNaN(yearlyRate)) {
-                return res.status(400).json({ status: "fail", message: "Rates must be valid numbers" });
-            }
         }
 
         try {
