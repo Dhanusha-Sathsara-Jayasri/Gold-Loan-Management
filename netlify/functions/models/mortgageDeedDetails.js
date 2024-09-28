@@ -19,6 +19,19 @@ const mortgageDeedSchema = mongoose.Schema({
   }
 );
 
-const mortgageDeed = mongoose.model('Mortgage-Deed', mortgageDeedSchema);
+const customerMortgageDeedScheema = mongoose.Schema({
+  customerId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer-Infomations',
+    required: true
+  },
+  mortgageDeed: {
+    type: [mortgageDeedSchema],
+    required: true
+  },
+  versionKey: false
+})
+
+const mortgageDeed = mongoose.model('Mortgage-Deed', customerMortgageDeedScheema);
 
 module.exports = mortgageDeed;

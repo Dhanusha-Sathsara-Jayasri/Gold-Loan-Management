@@ -6,17 +6,14 @@ const applicationController = {
     addApplication: async (req, res) => {
         const { customerId, applicantDetails } = req.body;
 
-        // Validate applicantDetails is an array
         if (!Array.isArray(applicantDetails)) {
             return res.status(400).json({ status: "fail", message: "Applicant Details must be an array" });
         }
 
-        // Validate customerId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(customerId)) {
             return res.status(400).json({ status: "fail", message: "Invalid Customer ID" });
         }
 
-        // Validate each applicant detail
         for (let applicant of applicantDetails) {
             const { phoneNumber, gender, maritalStatus } = applicant;
 
@@ -37,7 +34,6 @@ const applicationController = {
         }
 
         try {
-            // Create a new application
             const newApplication = new customerApplicantDetails({
                 customerId,
                 applicantDetails
