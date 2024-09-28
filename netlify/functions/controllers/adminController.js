@@ -86,12 +86,7 @@ const adminDataController = {
                 })
                 .exec();
 
-            res.status(200).json({
-                status: 'success',
-                data: {
-                    mortgageDeeds
-                },
-            });
+                res.status(200).json({ status: 'success', data: mortgageDeeds });
 
         } catch (error) {
             return res.status(500).json({ status: "fail", message: "Error While Fetching Mortgage Deeds", data: error });
