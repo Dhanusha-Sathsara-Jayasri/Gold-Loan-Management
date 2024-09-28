@@ -75,16 +75,13 @@ const adminDataController = {
                 .find({})
                 .populate({
                     path: 'customerId',
-                    model: customerInfomations,
-                    select: 'name whatsApp NIC',
-                })
-                .populate({
-                    path: 'customerId',
+                    model: customerInfomations, // Populating customer information
+                    select: 'name whatsApp NIC', // Select specific fields from customerInfomations
                     populate: {
-                        path: 'customerId',
-                        model: customerMortgageDeedInformations,
-                        select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
-                    },
+                        path: 'mortgageDeedId', // Assuming the relationship field to mortgage info is 'mortgageDeedId'
+                        model: customerMortgageDeedInformations, // Populating mortgage deed information
+                        select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl' // Select mortgage deed fields
+                    }
                 })
                 .exec();
     
@@ -93,6 +90,7 @@ const adminDataController = {
             res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
         }
     }
+    
     
 };
 
