@@ -80,7 +80,7 @@ const adminDataController = {
                     select: 'name whatsApp NIC',
                 })
                 .populate({
-                    path: 'applicantDetailsId',
+                    path: 'customerApplicantDetailsId',
                     model: customerApplicantDetails,
                     select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
                 })
