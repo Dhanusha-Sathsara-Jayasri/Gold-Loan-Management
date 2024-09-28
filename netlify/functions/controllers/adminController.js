@@ -92,7 +92,7 @@ const adminDataController = {
                 .populate({
                     path: 'customerId',
                     model: customerInfomations,
-                    select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
+                    select: 'name whatsApp NIC',
                 })
                 .exec();
         } catch (error) {
