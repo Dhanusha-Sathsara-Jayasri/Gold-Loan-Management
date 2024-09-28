@@ -75,13 +75,8 @@ const adminDataController = {
                 .find({})
                 .populate({
                     path: 'customerId',
-                    model: customerInfomations, // Populating customer information
-                    select: 'name whatsApp NIC', // Select specific fields from customerInfomations
-                    populate: {
-                        path: 'mortgageDeedId', // Assuming the relationship field to mortgage info is 'mortgageDeedId'
-                        model: customerMortgageDeedInformations, // Populating mortgage deed information
-                        select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl' // Select mortgage deed fields
-                    }
+                    model: customerInfomations, 
+                    select: 'name whatsApp NIC',
                 })
                 .exec();
     
