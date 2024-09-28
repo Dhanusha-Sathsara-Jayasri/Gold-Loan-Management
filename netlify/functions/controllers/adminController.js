@@ -1,8 +1,14 @@
 const AdminData = require('../models/AdminDetails');
+const customerInfomations = require('../models/CustomerDetails');
+const customerMortgageDeedInformations = require('../models/mortgageDeedDetails');
+const customerApplicantDetails = require('../models/ApplicantDetails');
+
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const JWT_SECRET = "test";
+
 
 const adminDataController = {
     addAdminData: async (req, res) => {
@@ -61,7 +67,29 @@ const adminDataController = {
         } catch (error) {
             res.status(500).send({ status: "Error", message: 'Server error' });
         }
-    }
+    },
+
+    getApplications: async (req, res) => {
+        try {
+            const applications = await customerApplicantDetails
+            .find({})
+            .populate({
+                path: 'customerId',
+                model: customerInfomations,
+                select: 'name whatsApp NIC',
+            })
+            .populate({
+                path: 'customerId',
+                model:  customerMortgageDeedInformations,
+                select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
+            })
+            .exec();
+
+            res.status(200).json({ status: 'success', data: applications });
+        } catch (error) {
+            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+        }
+    },
 };
 
 module.exports = adminDataController;
