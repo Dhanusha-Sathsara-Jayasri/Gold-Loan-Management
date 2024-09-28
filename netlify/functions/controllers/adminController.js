@@ -72,24 +72,28 @@ const adminDataController = {
     getApplicantDetails: async (req, res) => {
         try {
             const applications = await customerApplicantDetails
-            .find({})
-            .populate({
-                path: 'customerId',
-                model: customerInfomations,
-                select: 'name whatsApp NIC',
-            })
-            .populate({
-                path: 'customerId',
-                model:  customerMortgageDeedInformations,
-                select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
-            })
-            .exec();
-
+                .find({})
+                .populate({
+                    path: 'customerId',
+                    model: customerInfomations,
+                    select: 'name whatsApp NIC',
+                })
+                .populate({
+                    path: 'customerId',
+                    populate: {
+                        path: 'customerId',
+                        model: customerMortgageDeedInformations,
+                        select: 'institution branch startDate endDate contactNumber monthlyRate yearlyRate receiptNumber appraisedValue mortgageAmount rescueAmount imageUrl',
+                    },
+                })
+                .exec();
+    
             res.status(200).json({ status: 'success', data: applications });
         } catch (error) {
             res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
         }
-    },
+    }
+    
 };
 
 module.exports = adminDataController;
