@@ -82,7 +82,7 @@ const adminDataController = {
                 .populate({
                     path: 'customerApplicantDetailsId',
                     model: customerApplicantDetails,
-                    select: 'phoneNumber',
+                    select: '',
                 })
                 .exec();
 
