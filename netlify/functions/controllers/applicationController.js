@@ -93,7 +93,7 @@ const applicationController = {
                     res.status(200).json({ status: 'done', data: applications });
                 }
             } else {
-                res.status(404).json({ status: 'fail', data: "Customer Not Found" });
+                res.status(200).json({ status: 'customer not fount', data: "Customer Not Found" });
             }
         } catch (error) {
             console.log(error);
