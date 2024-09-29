@@ -65,7 +65,7 @@ const applicationController = {
 
     getApplication: async (req, res) => {
         const { NIC, whatsApp } = req.body;
-    
+
         try {
             const query = {};
             if (NIC) {
@@ -74,26 +74,32 @@ const applicationController = {
             if (whatsApp) {
                 query.whatsApp = whatsApp;
             }
-    
+        
             const customer = await customerInfomations.findOne(query);
-    
+        
             if (customer) {
                 const applications = await customerApplicantDetails
-                    .find({ customerId: customer._id }) 
+                    .find({ customerId: customer._id })
                     .populate({
                         path: 'customerId',
                         model: customerInfomations,
                         select: 'name whatsApp NIC',
                     })
                     .exec();
-    
-                res.status(200).json({ status: 'success', data: applications });
+        
+                if (applications.length === 0) {
+                    res.status(200).json({ status: 'success', message: "Customer found but no applicant details added", data: null });
+                } else {
+                    res.status(200).json({ status: 'success', data: applications });
+                }
             } else {
                 res.status(404).json({ status: 'fail', data: "Customer Not Found" });
             }
         } catch (error) {
             console.log(error);
+            res.status(500).json({ status: "fail", message: "Error while fetching application", data: error });
         }
+        
     },
     
 };
