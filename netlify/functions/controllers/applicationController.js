@@ -75,7 +75,7 @@ const applicationController = {
                 query.whatsApp = whatsApp;
             }
     
-            const customer = await customerModel.findOne(query);
+            const customer = await customerInfomations.findOne(query);
     
             if (customer) {
                 const applications = await customerApplicantDetails
