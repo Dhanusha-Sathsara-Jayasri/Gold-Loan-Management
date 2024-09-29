@@ -32,15 +32,15 @@ const mortgageDeedController = {
     },
 
     getMortgageDeed: async (req, res) => {
-        const { customerId/* , customerApplicantDetailsId  */} = req.body;
+        const { customerId, customerApplicantDetailsId } = req.body;
         if (!mongoose.Types.ObjectId.isValid(customerId)) {
             return res.status(400).json({ status: "fail", message: "Invalid Customer ID" });
         }
-       /*  if (!mongoose.Types.ObjectId.isValid(customerApplicantDetailsId)) {
+        if (!mongoose.Types.ObjectId.isValid(customerApplicantDetailsId)) {
             return res.status(400).json({ status: "fail", message: "Invalid Applicant Details ID" });
-        } */
+        }
         try {
-            const query = { customerId/* , customerApplicantDetailsId  */};
+            const query = { customerId, customerApplicantDetailsId };
             const mortgageDeed = await mortgageDeedModel.findOne(query);
             if (mortgageDeed) {
                 res.status(200).json({ status: 'success', data: mortgageDeed });
