@@ -90,7 +90,7 @@ const applicationController = {
                 if (applications.length === 0) {
                     res.status(200).json({ status: 'success', message: "Customer found but no applicant details added", data: null });
                 } else {
-                    res.status(200).json({ status: 'success', data: applications });
+                    res.status(200).json({ status: 'done', data: applications });
                 }
             } else {
                 res.status(404).json({ status: 'fail', data: "Customer Not Found" });
