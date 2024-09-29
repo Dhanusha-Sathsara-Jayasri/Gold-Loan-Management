@@ -90,13 +90,13 @@ const applicationController = {
                 if (applications.length === 0) {
                     res.status(200).json({ status: 'success', message: "Customer found but no applicant details added", data: null });
                 } else {
-                    res.status(200).json({ status: 'done', data: applications });
+                    const firstApplicationId = applications[0]._id;
+                    res.status(200).json({ status: 'done', data: applications, firstApplicationId });
                 }
             } else {
                 res.status(200).json({ status: 'customer not fount', data: "Customer Not Found" });
             }
         } catch (error) {
-            console.log(error);
             res.status(500).json({ status: "fail", message: "Error while fetching application", data: error });
         }
         
