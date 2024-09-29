@@ -58,7 +58,8 @@ const applicationController = {
             const result = await newApplication.save();
             res.status(200).json({ status: 'success', data: result, insertedId: newApplication._id });
         } catch (error) {
-            res.status(500).json({ status: "fail", message: "Error While Registering Application", data: error });
+            // res.status(500).json({ status: "fail", message: "Error While Registering Application", data: error });
+            console.log(error);
         }
     },
     
