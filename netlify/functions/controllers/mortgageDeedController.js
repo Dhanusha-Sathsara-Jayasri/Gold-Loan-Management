@@ -18,14 +18,22 @@ const mortgageDeedController = {
         }
 
         try {
-            const newMortgageDeed = new mortgageDeedModel({
-                customerId,
-                customerApplicantDetailsId,
-                mortgageDeed
-            });
+            const existingDeed = await mortgageDeedModel.findOne({ customerId, customerApplicantDetailsId });
 
-            const result = await newMortgageDeed.save();
-            res.status(200).json({ status: 'success', data: "Mortgage Deed Added Successfully", result });
+            if (existingDeed) {
+                existingDeed.mortgageDeed.push(...mortgageDeed);
+                const updatedDeed = await existingDeed.save();
+                return res.status(200).json({ status: 'success', message: "Mortgage Deed Updated Successfully", data: updatedDeed });
+            } else {
+                const newMortgageDeed = new mortgageDeedModel({
+                    customerId,
+                    customerApplicantDetailsId,
+                    mortgageDeed
+                });
+
+                const result = await newMortgageDeed.save();
+                return res.status(200).json({ status: 'success', message: "Mortgage Deed Added Successfully", data: result });
+            }
         } catch (error) {
             res.status(500).json({ status: "fail", message: "Error While Adding Mortgage Deed", data: error });
         }
