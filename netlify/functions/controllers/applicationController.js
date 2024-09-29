@@ -3,10 +3,9 @@ const customerApplicantDetails = require('../models/ApplicantDetails');
 const customerInfomations = require('../models/CustomerDetails');
 
 const applicationController = {
+
     addApplication: async (req, res) => {
         const { customerId, applicantDetails } = req.body;
-
-        console.log("test");
 
         if (!customerId) {
             return res.status(400).json({ status: "fail", message: "Customer ID is required" });
@@ -64,22 +63,39 @@ const applicationController = {
         }
     },
 
-    getApplications: async (req, res) => {
+    getApplication: async (req, res) => {
+        const { NIC, whatsApp } = req.body;
+    
         try {
-            const applications = await customerApplicantDetails
-                .find({})
-                .populate({
-                    path: 'customerId',
-                    model: customerInfomations,
-                    select: 'name whatsApp NIC',
-                })
-                .exec();
-
-            res.status(200).json({ status: 'success', data: applications });
+            const query = {};
+            if (NIC) {
+                query.NIC = NIC;
+            }
+            if (whatsApp) {
+                query.whatsApp = whatsApp;
+            }
+    
+            const customer = await customerModel.findOne(query);
+    
+            if (customer) {
+                const applications = await customerApplicantDetails
+                    .find({ customerId: customer._id }) 
+                    .populate({
+                        path: 'customerId',
+                        model: customerInfomations,
+                        select: 'name whatsApp NIC',
+                    })
+                    .exec();
+    
+                res.status(200).json({ status: 'success', data: applications });
+            } else {
+                res.status(404).json({ status: 'fail', data: "Customer Not Found" });
+            }
         } catch (error) {
-            res.status(500).json({ status: "fail", message: "Error While Fetching Applications", data: error });
+            console.log(error);
         }
     },
+    
 };
 
 module.exports = applicationController;
