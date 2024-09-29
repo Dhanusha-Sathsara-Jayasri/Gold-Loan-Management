@@ -6,6 +6,8 @@ const applicationController = {
     addApplication: async (req, res) => {
         const { customerId, applicantDetails } = req.body;
     
+        console.log(customerId, applicantDetails);
+
         if (!Array.isArray(applicantDetails)) {
             return res.status(400).json({ status: "fail", message: "Applicant Details must be an array" });
         }
