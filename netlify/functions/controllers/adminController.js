@@ -73,6 +73,7 @@ const adminDataController = {
 
     getApplicantDetails: async (req, res) => {
         const token = req.headers.authorization?.split(' ')[1]; 
+        console.log(token);
 
         if (!token) {
             return res.status(401).json({ status: 'fail', message: 'No token provided' });
@@ -101,6 +102,7 @@ const adminDataController = {
             res.status(200).json({ status: 'success', data: mortgageDeeds });
 
         } catch (error) {
+            console.log(error);
             if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
                 return res.status(401).json({ status: 'fail', message: 'Invalid or expired token' });
             }
