@@ -123,8 +123,9 @@ const adminDataController = {
             }
     
             const marketValue = await MarketValuesModel.find({})
-                .limit(1) 
-                .exec();
+            .sort({ _id: -1 })  
+            .limit(1) 
+            .exec();
     
             if (marketValue.length === 0) {
                 return res.status(404).json({ status: 'fail', message: 'No market values found' });
