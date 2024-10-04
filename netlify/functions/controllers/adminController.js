@@ -123,7 +123,6 @@ const adminDataController = {
             }
     
             const marketValue = await MarketValuesModel.find({})
-                .sort({ updatedAt: -1 })
                 .limit(1) 
                 .exec();
     
