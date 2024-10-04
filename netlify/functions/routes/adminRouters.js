@@ -7,5 +7,6 @@ router.post('/apply', adminController.addAdminData);
 router.post('/search', adminController.loginAdmin); 
 
 router.post('/getApplicantDetails', adminController.getApplicantDetails);
+router.post('/getMarketValues', adminController.getMarketValues);
 
 module.exports = router;

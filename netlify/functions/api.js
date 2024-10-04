@@ -44,14 +44,14 @@ router.use('/application', applicantRoutes);
 router.use('/mortgageDeed', mortgageDeedRoutes);
 router.use('/admins', adminRouters);
 router.use('/posts', postRoutes); 
-router.use('/api/', marketValueRoutes);
+router.use('/marketValues/', marketValueRoutes);
 
 router.get('/test', (req, res) => {
   res.send('Hello World');
 });
 
 router.get('/test2', (req, res) => {
-  res.send('Hello World');
+  res.send('Hello World 2');
 });
 
 app.use('/api/', router);

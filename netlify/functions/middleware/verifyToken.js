@@ -1,7 +1,7 @@
-require('dotenv').config(); // Load environment variables
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = "test";
+const JWT_SECRET = process.env.JWT_SECRET || "test";
 
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'];
@@ -14,9 +14,9 @@ const verifyToken = (req, res, next) => {
         if (err) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        req.userId = decoded.id; // Add user ID to the request object
-        req.userType = decoded.userType; // Add user type to the request object
-        next(); // Proceed to the next middleware or route handler
+        req.userId = decoded.id;
+        req.userType = decoded.userType; 
+        next();
     });
 };
 

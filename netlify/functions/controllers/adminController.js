@@ -2,6 +2,7 @@ const AdminData = require('../models/AdminDetails');
 const customerInfomations = require('../models/CustomerDetails');
 const customerMortgageDeedInformations = require('../models/mortgageDeedDetails');
 const customerApplicantDetails = require('../models/ApplicantDetails');
+const MarketValuesModel = require('../models/addMarketValues');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -73,7 +74,6 @@ const adminDataController = {
 
     getApplicantDetails: async (req, res) => {
         const token = req.headers.authorization?.split(' ')[1]; 
-        console.log(token);
 
         if (!token) {
             return res.status(401).json({ status: 'fail', message: 'No token provided' });
@@ -108,7 +108,38 @@ const adminDataController = {
             }
             res.status(500).json({ status: 'fail', message: 'Error while fetching mortgage deeds', error });
         }
+    }, 
+
+    getMarketValues: async (req, res) => {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ status: 'fail', message: 'No token provided' });
+        }
+    
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET);
+            if (!decoded) {
+                return res.status(401).json({ status: 'fail', message: 'Unauthorized' });
+            }
+    
+            const marketValue = await MarketValuesModel.find({})
+                .sort({ updatedAt: -1 })
+                .limit(1) 
+                .exec();
+    
+            if (marketValue.length === 0) {
+                return res.status(404).json({ status: 'fail', message: 'No market values found' });
+            }
+    
+            res.status(200).json({ status: 'success', data: marketValue[0] }); 
+        } catch (error) {
+            if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+                return res.status(401).json({ status: 'fail', message: 'Unauthorized' });
+            }
+            res.status(500).json({ status: 'fail', message: 'Error while fetching market values. Please try again later.' });
+        }
     }
+    
 };
 
 module.exports = adminDataController;
